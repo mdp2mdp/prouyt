@@ -1,0 +1,398 @@
+{
+  "_comment": "Hand-maintained mapping: docx section/heading, xlsx price rows (1-based data rows of sheet1) and photo folders for every catalog model. extract-data.mjs reads this file.",
+  "products": [
+    {
+      "slug": "twiggy-n",
+      "name": "Твигги Н",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ТВИГГИ Н"
+      ],
+      "xlsx": {
+        "main": 7
+      },
+      "photoDir": "твигги н"
+    },
+    {
+      "slug": "florentsiya",
+      "name": "Флоренция",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ФЛОРЕНЦИЯ"
+      ],
+      "xlsx": {
+        "main": 9
+      },
+      "photoDir": "флоренция"
+    },
+    {
+      "slug": "big-ben",
+      "name": "Биг-Бен",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "БИГ-БЕН"
+      ],
+      "xlsx": {
+        "main": 17
+      },
+      "photoDir": "биг-бен"
+    },
+    {
+      "slug": "charli",
+      "name": "Чарли",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ЧАРЛИ"
+      ],
+      "xlsx": {
+        "main": 11
+      },
+      "photoDir": "чарли"
+    },
+    {
+      "slug": "gretta",
+      "name": "Гретта",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ГРЕТТА"
+      ],
+      "xlsx": {
+        "main": 15
+      },
+      "photoDir": "гретта"
+    },
+    {
+      "slug": "greys",
+      "name": "Грейс",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ГРЕЙС"
+      ],
+      "xlsx": {
+        "main": 13
+      },
+      "photoDir": "грейс"
+    },
+    {
+      "slug": "kardinal-2",
+      "name": "Кардинал-2",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "КАРДИНАЛ-2"
+      ],
+      "xlsx": {
+        "main": 21
+      },
+      "photoDir": "кардинал 2"
+    },
+    {
+      "slug": "kardinal-3",
+      "name": "Кардинал-3",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "КАРДИНАЛ-3"
+      ],
+      "xlsx": {
+        "main": 23
+      },
+      "photoDir": "кардинал 3"
+    },
+    {
+      "slug": "keln",
+      "name": "Кельн",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "КЕЛЬН"
+      ],
+      "xlsx": {
+        "main": 25
+      },
+      "photoDir": "кельн прямой"
+    },
+    {
+      "slug": "vegas-3-rich",
+      "name": "Вегас 3 Рич",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ВЕГАС 3 РИЧ"
+      ],
+      "xlsx": {
+        "main": 54
+      },
+      "photoDir": "вегас 3 рич"
+    },
+    {
+      "slug": "oskar",
+      "name": "Оскар",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ОСКАР"
+      ],
+      "xlsx": {
+        "main": 44
+      },
+      "photoDir": "оскар прямой"
+    },
+    {
+      "slug": "trio",
+      "name": "Трио",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ТРИО"
+      ],
+      "xlsx": {
+        "main": 48
+      },
+      "photoDir": "трио"
+    },
+    {
+      "slug": "olimp",
+      "name": "Олимп",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ОЛИМП"
+      ],
+      "xlsx": {
+        "main": 76,
+        "alt": 80,
+        "note": "Row 76 has an empty name cell in the price list; matched to Олимп by size 250x113x83 and the beige trim note"
+      },
+      "photoDir": "олимп",
+      "excludePhotos": [
+        "оскар п студ .png"
+      ]
+    },
+    {
+      "slug": "versal",
+      "name": "Версаль",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "ВЕРСАЛЬ"
+      ],
+      "xlsx": {
+        "main": 68,
+        "alt": 72
+      },
+      "photoDir": "версаль"
+    },
+    {
+      "slug": "nikol",
+      "name": "Николь",
+      "category": "straight",
+      "docx": [
+        "straight",
+        "НИКОЛЬ"
+      ],
+      "xlsx": {
+        "main": 40
+      },
+      "photoDir": "николь прямая"
+    },
+    {
+      "slug": "turin",
+      "name": "Турин",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "ТУРИН"
+      ],
+      "xlsx": {
+        "main": 31
+      },
+      "photoDir": "турин"
+    },
+    {
+      "slug": "keln-uglovoy",
+      "name": "Кельн угловой",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "КЕЛЬН"
+      ],
+      "xlsx": {
+        "main": 27
+      },
+      "photoDir": "кельн угол"
+    },
+    {
+      "slug": "neapol",
+      "name": "Неаполь",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "НЕАПОЛЬ"
+      ],
+      "xlsx": {
+        "main": 38
+      },
+      "photoDir": "неаполь"
+    },
+    {
+      "slug": "oskar-uglovoy",
+      "name": "Оскар угловой",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "ОСКАР"
+      ],
+      "xlsx": {
+        "main": 46
+      },
+      "photoDir": "оскар"
+    },
+    {
+      "slug": "trio-uglovoy",
+      "name": "Трио угловой",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "ТРИО"
+      ],
+      "xlsx": {
+        "main": 50
+      },
+      "photoDir": "трио угол"
+    },
+    {
+      "slug": "trio-long",
+      "name": "Трио Лонг",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "ТРИО ЛОНГ"
+      ],
+      "xlsx": {
+        "main": 52
+      },
+      "photoDir": "трио лонг угол"
+    },
+    {
+      "slug": "big-ben-uglovoy",
+      "name": "Биг-Бен угловой",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "БИГ-БЕН"
+      ],
+      "xlsx": {
+        "main": 19
+      },
+      "photoDir": "биг бен угол"
+    },
+    {
+      "slug": "nikol-uglovoy",
+      "name": "Николь угловой",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "НИКОЛЬ"
+      ],
+      "xlsx": {
+        "main": 42
+      },
+      "photoDir": "николь угол"
+    },
+    {
+      "slug": "unika",
+      "name": "Уника",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "УНИКА"
+      ],
+      "xlsx": {
+        "main": 29
+      },
+      "photoDir": "уника"
+    },
+    {
+      "slug": "oskar-p",
+      "name": "Оскар П",
+      "category": "corner",
+      "docx": [
+        "corner",
+        "ОСКАР П"
+      ],
+      "xlsx": {
+        "main": 60
+      },
+      "photoDir": "оскар п",
+      "extraPhotos": [
+        {
+          "dir": "олимп",
+          "file": "оскар п студ .png"
+        }
+      ]
+    },
+    {
+      "slug": "estetik",
+      "name": "Эстетик",
+      "category": "modular",
+      "docx": [
+        "modular",
+        "ЭСТЕТИК"
+      ],
+      "xlsx": {
+        "modules": [
+          85,
+          87,
+          89,
+          91,
+          93,
+          101,
+          103
+        ],
+        "sets": [
+          105,
+          107,
+          109,
+          111,
+          113,
+          115
+        ],
+        "fromRow": 85
+      },
+      "photoDir": "эстетик"
+    },
+    {
+      "slug": "komfort",
+      "name": "Комфорт",
+      "category": "armchairs",
+      "docx": [
+        "armchairs",
+        "КОМФОРТ"
+      ],
+      "xlsx": {
+        "main": 56
+      },
+      "photoDir": null
+    },
+    {
+      "slug": "komfort-layt",
+      "name": "Комфорт Лайт",
+      "category": "armchairs",
+      "docx": [
+        "armchairs",
+        "КОМФОРТ ЛАЙТ"
+      ],
+      "xlsx": {
+        "main": 58
+      },
+      "photoDir": null
+    }
+  ]
+}

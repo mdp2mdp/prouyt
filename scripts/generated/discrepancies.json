@@ -1,0 +1,190 @@
+[
+  {
+    "slug": "florentsiya",
+    "name": "Флоренция",
+    "field": "Спальное место",
+    "docx": "2000 × 1500 мм",
+    "xlsx": "200 × 155 см",
+    "xlsxRow": 9,
+    "minor": false
+  },
+  {
+    "slug": "big-ben",
+    "name": "Биг-Бен",
+    "field": "Габариты, Ш",
+    "docx": "920 мм",
+    "xlsx": "108 см",
+    "xlsxRow": 17,
+    "minor": false
+  },
+  {
+    "slug": "big-ben",
+    "name": "Биг-Бен",
+    "field": "Габариты, В",
+    "docx": "1080 мм",
+    "xlsx": "92 см",
+    "xlsxRow": 17,
+    "minor": false
+  },
+  {
+    "slug": "big-ben",
+    "name": "Биг-Бен",
+    "field": "Спальное место",
+    "docx": "2000 × 1600 мм",
+    "xlsx": "201 × 160 см",
+    "xlsxRow": 17,
+    "minor": true
+  },
+  {
+    "slug": "charli",
+    "name": "Чарли",
+    "field": "Габариты, В",
+    "docx": "800 мм",
+    "xlsx": "83 см",
+    "xlsxRow": 11,
+    "minor": false
+  },
+  {
+    "slug": "gretta",
+    "name": "Гретта",
+    "field": "Габариты, В",
+    "docx": "850 мм",
+    "xlsx": "84 см",
+    "xlsxRow": 15,
+    "minor": true
+  },
+  {
+    "slug": "greys",
+    "name": "Грейс",
+    "field": "Габариты, В",
+    "docx": "850 мм",
+    "xlsx": "84 см",
+    "xlsxRow": 13,
+    "minor": true
+  },
+  {
+    "slug": "trio",
+    "name": "Трио",
+    "field": "Габариты, Ш",
+    "docx": "1080 мм",
+    "xlsx": "107 см",
+    "xlsxRow": 48,
+    "minor": true
+  },
+  {
+    "slug": "trio",
+    "name": "Трио",
+    "field": "Высота сиденья",
+    "docx": "450 мм",
+    "xlsx": "44 см",
+    "xlsxRow": 48,
+    "minor": true
+  },
+  {
+    "slug": "nikol",
+    "name": "Николь",
+    "field": "Габариты",
+    "docx": "2500 × 1060 мм (нет высоты)",
+    "xlsx": "250 х 106 х 95, сп.место 160 х 200, h посад.места 50",
+    "xlsxRow": 40
+  },
+  {
+    "slug": "turin",
+    "name": "Турин",
+    "field": "Габариты, Д",
+    "docx": "3090 мм",
+    "xlsx": "308 см",
+    "xlsxRow": 31,
+    "minor": true
+  },
+  {
+    "slug": "keln-uglovoy",
+    "name": "Кельн угловой",
+    "field": "Габариты, Д",
+    "docx": "2050 мм",
+    "xlsx": "238 / 220 см",
+    "xlsxRow": 27,
+    "minor": false
+  },
+  {
+    "slug": "keln-uglovoy",
+    "name": "Кельн угловой",
+    "field": "Габариты, Ш",
+    "docx": "960 мм",
+    "xlsx": "107 / 155 см",
+    "xlsxRow": 27,
+    "minor": false
+  },
+  {
+    "slug": "keln-uglovoy",
+    "name": "Кельн угловой",
+    "field": "Габариты, В",
+    "docx": "800 мм",
+    "xlsx": "85 см",
+    "xlsxRow": 27,
+    "minor": false
+  },
+  {
+    "slug": "keln-uglovoy",
+    "name": "Кельн угловой",
+    "field": "Спальное место",
+    "docx": "2050 × 1480 мм",
+    "xlsx": "200 × 150 см",
+    "xlsxRow": 27,
+    "minor": false
+  },
+  {
+    "slug": "oskar-uglovoy",
+    "name": "Оскар угловой",
+    "field": "Габариты, Д",
+    "docx": "2670 мм",
+    "xlsx": "268 см",
+    "xlsxRow": 46,
+    "minor": true
+  },
+  {
+    "slug": "trio-uglovoy",
+    "name": "Трио угловой",
+    "field": "Высота сиденья",
+    "docx": "450 мм",
+    "xlsx": "44 см",
+    "xlsxRow": 50,
+    "minor": true
+  },
+  {
+    "slug": "big-ben-uglovoy",
+    "name": "Биг-Бен угловой",
+    "field": "Габариты, Д",
+    "docx": "3130 мм",
+    "xlsx": "222 см",
+    "xlsxRow": 19,
+    "minor": false
+  },
+  {
+    "slug": "big-ben-uglovoy",
+    "name": "Биг-Бен угловой",
+    "field": "Габариты, Ш",
+    "docx": "1600 мм",
+    "xlsx": "108 см",
+    "xlsxRow": 19,
+    "minor": false
+  },
+  {
+    "slug": "big-ben-uglovoy",
+    "name": "Биг-Бен угловой",
+    "field": "Габариты, В",
+    "docx": "930 мм",
+    "xlsx": "92 см",
+    "xlsxRow": 19,
+    "minor": true
+  },
+  {
+    "slug": "big-ben-uglovoy",
+    "name": "Биг-Бен угловой",
+    "field": "Спальное место",
+    "docx": "2950 × 1600 мм",
+    "xlsx": "201 × 160 см",
+    "xlsxRow": 19,
+    "minor": false
+  }
+]

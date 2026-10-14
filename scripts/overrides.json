@@ -1,0 +1,60 @@
+{
+  "_comment": "Manual corrections applied after docx/xlsx extraction. Every entry is also listed in ВОПРОСЫ_ЗАКАЗЧИКУ.md. op=replaceSpec replaces a docx spec row with a value computed from the xlsx price list; op=addSpec appends a row that docx lacks.",
+  "types": {
+    "kardinal-2": "Диван-трансформер",
+    "kardinal-3": "Диван-трансформер",
+    "oskar-p": "Угловой диван-трансформер 3 в 1",
+    "estetik": "Модульная система",
+    "komfort": "Кресло для отдыха",
+    "komfort-layt": "Кресло для отдыха"
+  },
+  "specOps": [
+    {
+      "slug": "keln-uglovoy",
+      "op": "replaceSpec",
+      "label": "Габариты (Д×Ш×В)",
+      "xlsx": "dims",
+      "reason": "docx has the dimensions of Чарли (2050×960×800)"
+    },
+    {
+      "slug": "keln-uglovoy",
+      "op": "replaceSpec",
+      "label": "Спальное место",
+      "xlsx": "sleeping",
+      "reason": "docx has the sleeping place of Чарли (2050×1480)"
+    },
+    {
+      "slug": "big-ben",
+      "op": "replaceSpec",
+      "label": "Габариты (Д×Ш×В)",
+      "xlsx": "dims",
+      "reason": "docx width/height look swapped (920×1080 vs 1080×920 in the price list)"
+    },
+    {
+      "slug": "nikol",
+      "op": "replaceSpec",
+      "label": "Габариты (Д×Ш)",
+      "newLabel": "Габариты (Д×Ш×В)",
+      "xlsx": "dims",
+      "reason": "docx has no height"
+    },
+    {
+      "slug": "oskar-p",
+      "op": "addSpec",
+      "label": "Механизм трансформации",
+      "value": "«Поворотно-откатной»",
+      "before": "Наполнение",
+      "source": "xlsx",
+      "reason": "docx has no mechanism"
+    },
+    {
+      "slug": "unika",
+      "op": "addSpec",
+      "label": "Высота",
+      "value": "820 мм",
+      "before": "Спальное место",
+      "source": "xlsx",
+      "reason": "docx has no overall height"
+    }
+  ]
+}

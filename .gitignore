@@ -1,0 +1,9 @@
+# Original materials (large, not for git)
+_source/
+node_modules/
+dist/
+.astro/
+.DS_Store
+Thumbs.db
+*.log
+.env
