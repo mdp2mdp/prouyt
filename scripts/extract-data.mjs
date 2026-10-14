@@ -279,7 +279,8 @@ for (const m of map) {
       const i = xlsxInfo(n);
       return {
         name: i.name.replace(/^Эстетик\.\s*/, ''),
-        dims: i.dimsRaw,
+        dims: (i.dimsRaw.replace(/\s*(спальное место|сп\.?\s*место).*/i, '').match(/\d+/g) ?? []).join(' × '),
+        sleeping: (i.dimsRaw.match(/(?:спальное место|сп\.?\s*место):?\s*([\d\sxх×]+)/i)?.[1].match(/\d+/g) ?? []).join(' × ') || undefined,
         pricePromo: i.pricePromo,
         priceRrp: i.priceRrp,
         mechanism: i.mechanism || undefined,
