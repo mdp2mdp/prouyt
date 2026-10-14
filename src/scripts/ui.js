@@ -57,8 +57,8 @@ if (stage && !reduced && !(window.CSS && CSS.supports('animation-timeline: scrol
   const update = () => {
     ticking = false;
     const vh = window.innerHeight;
-    stage.style.setProperty('--p', clamp(window.scrollY / (0.6 * vh)).toFixed(3));
-    stage.style.setProperty('--q', clamp(window.scrollY / (0.36 * vh)).toFixed(3));
+    stage.style.setProperty('--p', clamp(window.scrollY / (0.26 * vh)).toFixed(3));
+    stage.style.setProperty('--q', clamp(window.scrollY / (0.16 * vh)).toFixed(3));
   };
   window.addEventListener('scroll', () => {
     if (active && !ticking) { ticking = true; requestAnimationFrame(update); }
