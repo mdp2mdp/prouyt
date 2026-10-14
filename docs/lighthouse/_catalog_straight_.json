@@ -1,17 +1,16 @@
 {
  "page": "/catalog/straight/",
- "perf": 98,
+ "perf": 100,
  "a11y": 100,
  "bp": 100,
  "seo": 100,
  "lcp": "1.8 s",
- "cls": "0.055",
- "tbt": "140 ms",
+ "cls": "0",
+ "tbt": "20 ms",
  "issues": [
-  "max-potential-fid(0.78)",
-  "label-content-name-mismatch(0)",
   "cache-insight(0)",
-  "image-delivery-insight(0.5)",
+  "forced-reflow-insight(0)",
+  "image-delivery-insight(0)",
   "network-dependency-tree-insight(0)",
   "render-blocking-insight(0.5)"
  ]

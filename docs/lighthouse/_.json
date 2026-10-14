@@ -6,10 +6,10 @@
  "seo": 100,
  "lcp": "1.7 s",
  "cls": "0",
- "tbt": "60 ms",
+ "tbt": "50 ms",
  "issues": [
   "cache-insight(0)",
-  "image-delivery-insight(0.5)",
+  "image-delivery-insight(0)",
   "network-dependency-tree-insight(0)",
   "render-blocking-insight(0.5)"
  ]

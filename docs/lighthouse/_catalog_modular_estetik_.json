@@ -1,14 +1,13 @@
 {
  "page": "/catalog/modular/estetik/",
  "perf": 100,
- "a11y": 97,
+ "a11y": 100,
  "bp": 100,
  "seo": 100,
  "lcp": "1.8 s",
  "cls": "0",
  "tbt": "0 ms",
  "issues": [
-  "list(0)",
   "cache-insight(0)",
   "forced-reflow-insight(0)",
   "image-delivery-insight(0.5)",

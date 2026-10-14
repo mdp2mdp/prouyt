@@ -6,7 +6,7 @@
  "seo": 100,
  "lcp": "1.7 s",
  "cls": "0",
- "tbt": "0 ms",
+ "tbt": "40 ms",
  "issues": [
   "cache-insight(0)",
   "image-delivery-insight(0)",

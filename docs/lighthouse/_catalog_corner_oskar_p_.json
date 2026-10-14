@@ -1,17 +1,17 @@
 {
  "page": "/catalog/corner/oskar-p/",
- "perf": 100,
- "a11y": 97,
+ "perf": 99,
+ "a11y": 100,
  "bp": 100,
  "seo": 100,
- "lcp": "1.8 s",
+ "lcp": "1.6 s",
  "cls": "0",
- "tbt": "50 ms",
+ "tbt": "100 ms",
  "issues": [
-  "list(0)",
+  "max-potential-fid(0.88)",
   "cache-insight(0)",
   "forced-reflow-insight(0)",
-  "image-delivery-insight(0)",
+  "image-delivery-insight(0.5)",
   "network-dependency-tree-insight(0)",
   "render-blocking-insight(0.5)"
  ]
