@@ -7,7 +7,7 @@ const { items, label } = Astro.props;
     <li class="features__item" data-reveal style={`--reveal-i:${i}`}>
       <span class="features__icon"><Icon name={it.icon} size={26} /></span>
       <div>
-        <h3 class="features__title">{it.title}</h3>
+        <p class="features__title">{it.title}</p>
         <p class="features__text">{it.text}</p>
       </div>
     </li>

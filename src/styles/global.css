@@ -59,7 +59,7 @@ button { font: inherit; color: inherit; }
 .on-dark .btn--outline, .section--dark .btn--outline { border-color: var(--btn-outline-border-on-dark); color: var(--color-on-dark); }
 .on-dark .btn--outline:hover, .section--dark .btn--outline:hover { border-color: var(--color-accent); background: rgb(242 233 205 / 0.08); }
 .btn--lg { min-height: 3.5rem; padding-inline: 2rem; font-size: var(--text-base); }
-.link-underline { display: inline-block; padding-block: var(--space-1); text-decoration: none; border-bottom: var(--border-thin) solid currentColor; transition: opacity var(--duration-fast); }
+.link-underline { display: inline-block; padding-block: 0.8rem; text-decoration: underline; text-underline-offset: 0.35em; text-decoration-thickness: 1px; transition: opacity var(--duration-fast); }
 .link-underline:hover { opacity: 0.75; }
 
 /* ---- scroll reveal (only when JS is on and motion is allowed) ---- */

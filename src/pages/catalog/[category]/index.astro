@@ -43,12 +43,12 @@ const description = `${category.title} от мебельной фабрики «
             </select>
             <Icon name="chevron" size={18} />
           </span>
-          <p class="visually-hidden" role="status" aria-live="polite" data-filter-status></p>
+          <p class="filter__status" role="status" aria-live="polite" data-filter-status></p>
         </div>
       )}
 
       <ul class="grid" data-grid>
-        {list.map((p, i) => <ProductCard product={p} eager={i < 3} />)}
+        {list.map((p, i) => <ProductCard product={p} eager={i < 3} headingLevel={2} />)}
       </ul>
       <p class="catalog__note">{site.legal.priceNote}</p>
     </div>
@@ -66,6 +66,7 @@ const description = `${category.title} от мебельной фабрики «
   .catalog__head p { margin-top: var(--space-3); max-width: 44rem; color: var(--color-text); }
   .filter { display: flex; align-items: center; gap: var(--space-3); margin-block: var(--space-5); }
   .filter__label { font-size: var(--text-sm); }
+  .filter__status { font-size: var(--text-sm); color: var(--color-text-muted); }
   .filter__select { position: relative; display: inline-flex; align-items: center; }
   .filter__select select { appearance: none; min-height: 2.75rem; padding: 0 2.5rem 0 var(--space-4); border: var(--border-thin) solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text-strong); font: inherit; font-size: var(--text-sm); cursor: pointer; }
   .filter__select select:hover { border-color: var(--color-brand); }

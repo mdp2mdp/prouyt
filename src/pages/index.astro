@@ -35,8 +35,9 @@ const title = `${site.brand.legalName} — ${site.brand.tagline.toLowerCase()}`;
 <Base title={title} description={site.seo.defaultDescription} jsonLd={[org]}>
   <Hero />
 
-  <section class="section section--dark features-band" aria-label="Преимущества" style="padding-block: var(--space-6)">
+  <section class="section section--dark features-band" aria-labelledby="adv-title" style="padding-block: var(--space-6)">
     <div class="container">
+      <h2 id="adv-title" class="visually-hidden">Преимущества фабрики</h2>
       <FeatureList items={site.home.advantages} label="Преимущества фабрики" />
     </div>
   </section>
@@ -57,9 +58,9 @@ const title = `${site.brand.legalName} — ${site.brand.tagline.toLowerCase()}`;
     </div>
   </section>
 
-  <section id="why" class="section section--dark" aria-labelledby="why-title">
+  <section id="why" class="section section--dark" aria-labelledby="why-title" style="padding-block: clamp(2.75rem, 2rem + 3vw, 4.5rem)">
     <div class="container">
-      <div class="section__head" data-reveal>
+      <div class="section__head" data-reveal style="margin-bottom: var(--space-6)">
         <h2 id="why-title">Почему выбирают нас</h2>
       </div>
       <FeatureList items={site.home.why} label="Почему выбирают нас" />

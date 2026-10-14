@@ -76,12 +76,12 @@ const { w, h } = manifest.logo;
     .site-header__row { min-height: var(--header-h-lg); }
     .logo img { height: 3.5rem; }
     .burger, .header-call-icon { display: none; }
-    .header-phone { display: block; color: var(--color-on-dark); text-decoration: none; font-size: var(--text-base); font-weight: 500; white-space: nowrap; }
+    .header-phone { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--color-on-dark); text-decoration: none; font-size: var(--text-base); font-weight: 500; white-space: nowrap; }
     .header-phone:hover { color: var(--color-accent); }
     .header-call { display: inline-flex; min-height: 2.75rem; }
     .site-nav, :global(.js) .site-nav { position: static; visibility: visible; opacity: 1; transform: none; padding: 0; border: 0; box-shadow: none; background: transparent; flex: 1; display: flex; justify-content: center; }
     .site-nav__list, :global(.js) .site-nav__list { flex-direction: row; gap: var(--space-6); }
-    .site-nav__list a, :global(.js) .site-nav__list a { padding-block: var(--space-2); font-family: var(--font-sans); font-size: var(--text-sm); border: 0; }
+    .site-nav__list a, :global(.js) .site-nav__list a { padding-block: var(--space-3); font-family: var(--font-sans); font-size: var(--text-sm); border: 0; }
     .site-nav__cta, :global(.js) .site-nav__cta { display: none; }
   }
   @media (min-width: 900px) and (max-width: 1099px) {
