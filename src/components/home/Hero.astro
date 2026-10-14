@@ -9,7 +9,7 @@ import { site, url } from '../../lib/site.js';
         class="hero__img"
         id="hero/hero"
         alt="Гостиная с угловым диваном тёмно-зелёного цвета"
-        sizes="100vw"
+        sizes="(max-width: 899px) 170vh, 100vw"
         priority
         fallbackWidth={960}
       />
@@ -31,19 +31,24 @@ import { site, url } from '../../lib/site.js';
 
 <style>
   /* ---------- base hero (also the reduced-motion / no-JS version) ---------- */
-  .hero { position: relative; isolation: isolate; display: grid; align-items: end; min-height: min(35rem, 90svh); background: var(--green-950); color: var(--color-on-dark); overflow: hidden; }
+  .hero { position: relative; isolation: isolate; display: grid; align-items: start; min-height: min(38rem, 92svh); background: var(--green-950); color: var(--color-on-dark); overflow: hidden; }
   .hero__media { position: absolute; inset: 0; z-index: -3; }
   .hero__media :global(picture), .hero__media :global(.hero__img) { display: block; width: 100%; height: 100%; }
-  .hero__media :global(.hero__img) { object-fit: cover; object-position: 66% 60%; }
-  .hero__shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(0deg, rgb(16 30 21 / 0.92) 0%, rgb(16 30 21 / 0.72) 34%, rgb(16 30 21 / 0.12) 62%, rgb(16 30 21 / 0.05) 100%); }
+  .hero__media :global(.hero__img) { object-fit: cover; object-position: 80% 50%; }
+  .hero__shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgb(16 30 21 / 0.55) 0%, rgb(16 30 21 / 0.3) 60%, rgb(16 30 21 / 0.1) 100%), linear-gradient(180deg, rgb(16 30 21 / 0.2) 0%, rgb(16 30 21 / 0) 45%, rgb(16 30 21 / 0.55) 100%); }
   .hero__dim { position: absolute; inset: 0; z-index: -1; background: var(--green-950); opacity: 0; pointer-events: none; }
-  .hero__content { padding-block: var(--space-8) var(--space-7); }
+  .hero__content { padding-block: clamp(3.5rem, 13svh, 5.5rem) var(--space-7); }
   .hero h1 span { display: block; }
-  .hero h1 { max-width: 15ch; font-size: var(--text-hero); color: var(--color-accent); }
-  .hero__lead { max-width: 26rem; margin-top: var(--space-4); font-size: var(--text-lg); color: var(--color-on-dark); }
-  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-6); }
+  .hero h1 { max-width: 20ch; font-size: clamp(2rem, 8.8vw, 3rem); color: var(--color-accent); }
+  .hero__lead { max-width: 18rem; margin-top: var(--space-5); font-size: var(--text-base); color: var(--color-on-dark); }
+  .hero__actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); margin-top: var(--space-6); }
   .hero .link-underline { color: var(--color-on-dark); }
 
+  @media (min-width: 640px) {
+    .hero h1 { font-size: var(--text-hero); }
+    .hero__lead { max-width: 26rem; font-size: var(--text-lg); }
+    .hero__actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); }
+  }
   @media (min-width: 900px) {
     .hero { align-items: center; min-height: clamp(34rem, 46vw, 40rem); }
     .hero__shade { background: linear-gradient(90deg, rgb(16 30 21 / 0.82) 0%, rgb(16 30 21 / 0.5) 42%, rgb(16 30 21 / 0.08) 75%); }
