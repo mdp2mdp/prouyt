@@ -98,7 +98,7 @@ for (const [slug, list] of Object.entries(photoMap)) {
 console.log();
 
 /* ---- hero */
-const heroSrc = path.join(PHOTOS, 'фото для главной страницы сайта.PNG');
+const heroSrc = path.join(PHOTOS, 'фото для главной страницы сайта 2.jfif');
 manifest['hero/hero'] = await emit(heroSrc, path.join(OUT, 'hero'), 'hero');
 // social preview 1200x630
 const og = path.join(OUT, 'og.jpg');
