@@ -22,3 +22,7 @@ npm run audit    # сборка + проверка SEO, ссылок, карти
 `SITE_URL` и `BASE_PATH` берутся из окружения. По умолчанию `https://mdp2mdp.github.io` и `/prouyt`; для собственного домена: `SITE_URL=https://prouyt.ru BASE_PATH=/`.
 
 `_source/` (исходные материалы и оригиналы фото) в git не попадает.
+
+## Публикация
+См. [docs/DEPLOY.md](docs/DEPLOY.md): включение Pages, обновление сайта, переключение домена prouyt.ru.
+Если задаёте `BASE_PATH=/` вручную в Git Bash, используйте `MSYS_NO_PATHCONV=1` (иначе Git Bash превращает `/` в путь Windows) или PowerShell.
