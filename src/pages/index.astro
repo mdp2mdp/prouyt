@@ -5,11 +5,34 @@ import FeatureList from '../components/home/FeatureList.astro';
 import CatalogTiles from '../components/home/CatalogTiles.astro';
 import About from '../components/home/About.astro';
 import Contacts from '../components/home/Contacts.astro';
-import { site } from '../lib/site.js';
+import { site, url } from '../lib/site.js';
 
+const origin = new URL(url(''), Astro.site).href;
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.brand.legalName,
+  alternateName: site.brand.name,
+  slogan: site.brand.slogan,
+  description: site.seo.defaultDescription,
+  url: origin,
+  logo: new URL(url('img/brand/logo-green-640.png'), Astro.site).href,
+  image: new URL(url('img/og.jpg'), Astro.site).href,
+  email: site.contacts.email,
+  telephone: '+7-964-510-67-47',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'RU',
+    addressRegion: 'Московская область',
+    addressLocality: 'Фрязино',
+    streetAddress: 'ул. Восточная Заводская Промышленная, д. 22, стр. 6',
+  },
+  contactPoint: { '@type': 'ContactPoint', contactType: 'sales', telephone: '+7-964-510-67-47', email: site.contacts.email, availableLanguage: 'ru' },
+  areaServed: 'RU',
+};
 const title = `${site.brand.legalName} — ${site.brand.tagline.toLowerCase()}`;
 ---
-<Base title={title} description={site.seo.defaultDescription}>
+<Base title={title} description={site.seo.defaultDescription} jsonLd={[org]}>
   <Hero />
 
   <section class="section section--dark features-band" aria-label="Преимущества" style="padding-block: var(--space-6)">

@@ -105,6 +105,24 @@ const og = path.join(OUT, 'og.jpg');
 if (FORCE || !fs.existsSync(og))
   await sharp(heroSrc).resize(1200, 630, { fit: 'cover', position: 'attention', kernel: 'lanczos3' }).jpeg({ quality: 88, mozjpeg: true }).toFile(og);
 
+// per-model previews: the cover cropped to 1200x630 (studio shots have empty space above and below the sofa)
+fs.mkdirSync(path.join(OUT, 'og'), { recursive: true });
+manifest.og = [];
+for (const [slug, list] of Object.entries(photoMap)) {
+  const cover = list[0];
+  if (!cover) continue;
+  const m = manifest[`${slug}/${cover.id}`];
+  const w = [...m.widths].reverse().find((x) => x <= 1600) ?? m.widths[0];
+  const file = path.join(OUT, slug, `${cover.id}-${w}.webp`);
+  const target = path.join(OUT, 'og', `${slug}.jpg`);
+  manifest.og.push(slug);
+  if (!FORCE && fs.existsSync(target) && fs.statSync(target).mtimeMs > fs.statSync(file).mtimeMs) continue;
+  await sharp(file)
+    .resize(1200, 630, { fit: 'cover', position: 'entropy', kernel: 'lanczos3' })
+    .jpeg({ quality: 88, mozjpeg: true })
+    .toFile(target);
+}
+
 /* ---- logos: crop the square canvas down to the artwork, recolour to beige / dark green, plus a favicon from the sofa glyph */
 const logoSrc = path.join(SRC, 'проуют лого прозрачный.png');
 const { data: rgba, info: li } = await sharp(logoSrc).ensureAlpha().raw().toBuffer({ resolveWithObject: true });

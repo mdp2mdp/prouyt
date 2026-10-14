@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, url } from '../lib/site.js';
+---
+<Base title={`Страница не найдена — ${site.seo.titleSuffix}`} description="Такой страницы нет. Перейдите в каталог или позвоните нам." noindex path={url('404.html')}>
+  <section class="section nf">
+    <div class="container nf__box">
+      <p class="eyebrow">Ошибка 404</p>
+      <h1>Страница не найдена</h1>
+      <p class="nf__text">Возможно, ссылка устарела или в адресе опечатка. Посмотрите каталог или позвоните нам — подскажем по моделям, тканям и срокам.</p>
+      <div class="nf__actions">
+        <a class="btn btn--primary btn--lg" href={url('catalog/')}>Смотреть каталог</a>
+        <a class="btn btn--outline btn--lg" href={site.contacts.phoneHref}>{site.contacts.phone}</a>
+      </div>
+      <a class="link-underline nf__home" href={url('')}>На главную</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { min-height: 55vh; display: grid; align-items: center; }
+  .nf__box { text-align: center; max-width: 40rem; }
+  .nf h1 { font-size: var(--text-3xl); }
+  .nf__text { margin-top: var(--space-4); color: var(--color-text-muted); }
+  .nf__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-6); }
+  .nf__home { margin-top: var(--space-6); }
+</style>

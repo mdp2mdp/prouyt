@@ -5,6 +5,7 @@ import ProductCard from '../../../components/ProductCard.astro';
 import Icon from '../../../components/Icon.astro';
 import { products, categoryById, categoryUrl, productUrl, priceText, features, related, lc } from '../../../lib/catalog.js';
 import { imageInfo } from '../../../lib/images.js';
+import manifest from '../../../data/image-manifest.json';
 import { site, url, formatPrice, priceOf } from '../../../lib/site.js';
 
 export function getStaticPaths() {
@@ -51,7 +52,7 @@ const productLd = {
   },
 };
 ---
-<Base title={title} description={description} jsonLd={[productLd, crumbs]}>
+<Base title={title} description={description} jsonLd={[productLd, crumbs]} image={manifest.og.includes(p.slug) ? `img/og/${p.slug}.jpg` : undefined}>
   <div class="container product">
     <nav class="crumbs" aria-label="Хлебные крошки">
       <ol>

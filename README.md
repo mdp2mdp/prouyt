@@ -9,6 +9,7 @@ npm run data     # docx/xlsx из _source/ → src/data/*.json + docs/stage1-rep
 npm run images   # оригиналы фото из _source/ → public/img/ (этап 2)
 npm run dev      # локальная разработка
 npm run build    # сборка в dist/
+npm run audit    # сборка + проверка SEO, ссылок, картинок, tel/mailto
 ```
 
 ## Где что менять
