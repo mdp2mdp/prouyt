@@ -247,14 +247,14 @@
     "variants": [],
     "images": {
       "cover": {
-        "id": "big-ben/studio-1",
+        "id": "big-ben/studio-2",
         "kind": "studio",
         "w": 1264,
         "h": 848
       },
       "gallery": [
         {
-          "id": "big-ben/studio-1",
+          "id": "big-ben/studio-2",
           "kind": "studio",
           "w": 1264,
           "h": 848
@@ -272,7 +272,7 @@
           "h": 1008
         },
         {
-          "id": "big-ben/studio-2",
+          "id": "big-ben/studio-1",
           "kind": "studio",
           "w": 1264,
           "h": 848
@@ -519,14 +519,14 @@
     "variants": [],
     "images": {
       "cover": {
-        "id": "greys/studio-1",
+        "id": "greys/studio-2",
         "kind": "studio",
         "w": 1264,
         "h": 848
       },
       "gallery": [
         {
-          "id": "greys/studio-1",
+          "id": "greys/studio-2",
           "kind": "studio",
           "w": 1264,
           "h": 848
@@ -550,7 +550,7 @@
           "h": 768
         },
         {
-          "id": "greys/studio-2",
+          "id": "greys/studio-1",
           "kind": "studio",
           "w": 1264,
           "h": 848
@@ -730,14 +730,14 @@
     "variants": [],
     "images": {
       "cover": {
-        "id": "kardinal-3/studio-1",
+        "id": "kardinal-3/studio-3",
         "kind": "studio",
         "w": 2528,
         "h": 1696
       },
       "gallery": [
         {
-          "id": "kardinal-3/studio-1",
+          "id": "kardinal-3/studio-3",
           "kind": "studio",
           "w": 2528,
           "h": 1696
@@ -761,13 +761,13 @@
           "h": 941
         },
         {
-          "id": "kardinal-3/studio-2",
+          "id": "kardinal-3/studio-1",
           "kind": "studio",
           "w": 2528,
           "h": 1696
         },
         {
-          "id": "kardinal-3/studio-3",
+          "id": "kardinal-3/studio-2",
           "kind": "studio",
           "w": 2528,
           "h": 1696
@@ -1754,14 +1754,14 @@
     ],
     "images": {
       "cover": {
-        "id": "neapol/studio-1",
+        "id": "neapol/studio-2",
         "kind": "studio",
         "w": 2528,
         "h": 1696
       },
       "gallery": [
         {
-          "id": "neapol/studio-1",
+          "id": "neapol/studio-2",
           "kind": "studio",
           "w": 2528,
           "h": 1696
@@ -1779,7 +1779,7 @@
           "h": 768
         },
         {
-          "id": "neapol/studio-2",
+          "id": "neapol/studio-1",
           "kind": "studio",
           "w": 2528,
           "h": 1696
@@ -2347,14 +2347,14 @@
     ],
     "images": {
       "cover": {
-        "id": "unika/studio-1",
+        "id": "unika/studio-2",
         "kind": "studio",
         "w": 2528,
         "h": 1696
       },
       "gallery": [
         {
-          "id": "unika/studio-1",
+          "id": "unika/studio-2",
           "kind": "studio",
           "w": 2528,
           "h": 1696
@@ -2372,7 +2372,7 @@
           "h": 768
         },
         {
-          "id": "unika/studio-2",
+          "id": "unika/studio-1",
           "kind": "studio",
           "w": 2528,
           "h": 1696

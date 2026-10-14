@@ -147,7 +147,9 @@ async function collectPhotos(m) {
   const studio = list.filter((p) => p.kind === 'studio').sort((a, b) => b.w * b.h - a.w * a.h || b.bytes - a.bytes || natural(a.src, b.src));
   const interior = list.filter((p) => p.kind === 'interior').sort((a, b) => natural(a.src, b.src));
   // cover = largest studio shot, then interior shots, then remaining studio angles
-  const ordered = [...studio.slice(0, 1), ...interior, ...studio.slice(1)];
+  // `cover` in model-map.json picks an assembled front view when the largest studio shot shows the unfolded sofa
+  const coverP = (m.cover && studio.find((p, n) => `studio-${n + 1}` === m.cover)) || studio[0];
+  const ordered = [...(coverP ? [coverP] : []), ...interior, ...studio.filter((p) => p !== coverP)];
   let s = 0;
   let i = 0;
   const idOf = (p) => (p.kind === 'studio' ? `studio-${++s}` : `interior-${++i}`);

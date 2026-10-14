@@ -38,7 +38,8 @@
       "xlsx": {
         "main": 17
       },
-      "photoDir": "биг-бен"
+      "photoDir": "биг-бен",
+      "cover": "studio-2"
     },
     {
       "slug": "charli",
@@ -77,7 +78,8 @@
       "xlsx": {
         "main": 13
       },
-      "photoDir": "грейс"
+      "photoDir": "грейс",
+      "cover": "studio-2"
     },
     {
       "slug": "kardinal-2",
@@ -103,7 +105,8 @@
       "xlsx": {
         "main": 23
       },
-      "photoDir": "кардинал 3"
+      "photoDir": "кардинал 3",
+      "cover": "studio-3"
     },
     {
       "slug": "keln",
@@ -239,7 +242,8 @@
       "xlsx": {
         "main": 38
       },
-      "photoDir": "неаполь"
+      "photoDir": "неаполь",
+      "cover": "studio-2"
     },
     {
       "slug": "oskar-uglovoy",
@@ -317,7 +321,8 @@
       "xlsx": {
         "main": 29
       },
-      "photoDir": "уника"
+      "photoDir": "уника",
+      "cover": "studio-2"
     },
     {
       "slug": "oskar-p",
@@ -336,7 +341,8 @@
           "dir": "олимп",
           "file": "оскар п студ .png"
         }
-      ]
+      ],
+      "cover": "studio-1"
     },
     {
       "slug": "estetik",
