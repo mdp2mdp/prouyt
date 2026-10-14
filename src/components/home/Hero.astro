@@ -2,31 +2,41 @@
 import Picture from '../Picture.astro';
 import { site, url } from '../../lib/site.js';
 ---
-<section class="hero on-dark" aria-labelledby="hero-title">
-  <Picture
-    class="hero__img"
-    id="hero/hero"
-    alt="Гостиная с угловым диваном тёмно-зелёного цвета"
-    sizes="100vw"
-    priority
-    fallbackWidth={960}
-  />
-  <div class="hero__shade" aria-hidden="true"></div>
-  <div class="container hero__content">
-    <h1 id="hero-title"><span>{site.brand.slogan.split(', ')[0]},</span> <span>{site.brand.slogan.split(', ').slice(1).join(', ')}</span></h1>
-    <p class="hero__lead">{site.brand.tagline}</p>
-    <div class="hero__actions">
-      <a class="btn btn--sand btn--lg" href={url('#catalog')}>Смотреть каталог</a>
-      <a class="link-underline" href={url('#about')}>О фабрике</a>
+<div class="hero-stage" data-hero-stage>
+  <section class="hero on-dark" aria-labelledby="hero-title">
+    <div class="hero__media">
+      <Picture
+        class="hero__img"
+        id="hero/hero"
+        alt="Гостиная с угловым диваном тёмно-зелёного цвета"
+        sizes="100vw"
+        priority
+        fallbackWidth={960}
+      />
     </div>
-  </div>
-</section>
+    <div class="hero__shade" aria-hidden="true"></div>
+    <div class="hero__dim" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <div class="hero__text">
+        <h1 id="hero-title"><span>{site.brand.slogan.split(', ')[0]},</span> <span>{site.brand.slogan.split(', ').slice(1).join(', ')}</span></h1>
+        <p class="hero__lead">{site.brand.tagline}</p>
+        <div class="hero__actions">
+          <a class="btn btn--sand btn--lg" href={url('#catalog')}>Смотреть каталог</a>
+          <a class="link-underline" href={url('#about')}>О фабрике</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <style>
+  /* ---------- base hero (also the reduced-motion / no-JS version) ---------- */
   .hero { position: relative; isolation: isolate; display: grid; align-items: end; min-height: min(35rem, 90svh); background: var(--green-950); color: var(--color-on-dark); overflow: hidden; }
-  .hero :global(picture), .hero :global(.hero__img) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
-  .hero :global(.hero__img) { object-fit: cover; object-position: 66% 60%; }
-  .hero__shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(16 30 21 / 0.92) 0%, rgb(16 30 21 / 0.72) 34%, rgb(16 30 21 / 0.12) 62%, rgb(16 30 21 / 0.05) 100%); }
+  .hero__media { position: absolute; inset: 0; z-index: -3; }
+  .hero__media :global(picture), .hero__media :global(.hero__img) { display: block; width: 100%; height: 100%; }
+  .hero__media :global(.hero__img) { object-fit: cover; object-position: 66% 60%; }
+  .hero__shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(0deg, rgb(16 30 21 / 0.92) 0%, rgb(16 30 21 / 0.72) 34%, rgb(16 30 21 / 0.12) 62%, rgb(16 30 21 / 0.05) 100%); }
+  .hero__dim { position: absolute; inset: 0; z-index: -1; background: var(--green-950); opacity: 0; pointer-events: none; }
   .hero__content { padding-block: var(--space-8) var(--space-7); }
   .hero h1 span { display: block; }
   .hero h1 { max-width: 15ch; font-size: var(--text-hero); color: var(--color-accent); }
@@ -39,6 +49,53 @@ import { site, url } from '../../lib/site.js';
     .hero__shade { background: linear-gradient(90deg, rgb(16 30 21 / 0.82) 0%, rgb(16 30 21 / 0.5) 42%, rgb(16 30 21 / 0.08) 75%); }
     .hero__content { padding-block: var(--space-9); }
     .hero h1 { max-width: 20ch; }
-    .hero :global(.hero__img) { object-position: 50% 50%; }
+    .hero__media :global(.hero__img) { object-position: 50% 50%; }
+  }
+
+  /* ---------- scroll effect: the hero pins for ~160vh, the photo slowly zooms and darkens,
+     the text drifts up and fades, then the next block slides over it ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero-stage { --pin: 60svh; --fade: 36svh; position: relative; height: 150svh; }
+    :global(.js) .hero { position: sticky; top: var(--header-h); height: clamp(30rem, calc(100vh - var(--header-h)), 60rem); height: clamp(30rem, calc(100svh - var(--header-h)), 60rem); z-index: 1; }
+    :global(.js) .hero__media, :global(.js) .hero__text { will-change: transform, opacity; }
+    /* the blocks after the hero sit above the pinned photo and cover it as they arrive */
+    :global(.js) .hero-stage ~ :global(section) { position: relative; z-index: 2; }
+    :global(.js) .hero-stage + :global(section) { margin-top: -26svh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  }
+  @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+    :global(.js) .hero-stage { height: 160svh; }
+    :global(.js) .hero { height: clamp(32rem, calc(100vh - var(--header-h-lg)), 60rem); height: clamp(32rem, calc(100svh - var(--header-h-lg)), 60rem); top: var(--header-h-lg); }
+  }
+
+  /* Browsers with scroll-driven animations: pure CSS */
+  @keyframes hero-zoom { to { transform: scale(1.08); } }
+  @keyframes hero-dim { to { opacity: 0.4; } }
+  @keyframes hero-out { to { opacity: 0; transform: translateY(-9svh); } }
+  @keyframes hero-fade { to { opacity: 0; } }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      :global(.js) .hero__media { animation: hero-zoom linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 60svh); }
+      :global(.js) .hero__dim { animation: hero-dim linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 60svh); }
+      :global(.js) .hero__text { animation: hero-out linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 36svh); }
+    }
+    /* Fallback (no scroll-driven animations): a tiny script writes --p / --q (0..1) on the stage */
+    @supports not (animation-timeline: scroll()) {
+      :global(.js) .hero__media { transform: scale(calc(1 + 0.08 * var(--p, 0))); }
+      :global(.js) .hero__dim { opacity: calc(0.4 * var(--p, 0)); }
+      :global(.js) .hero__text { opacity: calc(1 - var(--q, 0)); transform: translateY(calc(var(--q, 0) * -9svh)); }
+    }
+  }
+  /* Phones: lighter effect — no zoom, only fade */
+  @media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
+    @supports (animation-timeline: scroll()) {
+      :global(.js) .hero__media { animation: none; }
+      :global(.js) .hero__dim { animation: none; }
+      :global(.js) .hero__text { animation: hero-fade linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 36svh); }
+    }
+    @supports not (animation-timeline: scroll()) {
+      :global(.js) .hero__media { transform: none; }
+      :global(.js) .hero__dim { opacity: 0; }
+      :global(.js) .hero__text { transform: none; }
+    }
   }
 </style>

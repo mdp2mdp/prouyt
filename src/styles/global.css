@@ -23,6 +23,8 @@ button { font: inherit; color: inherit; }
 .icon { stroke-width: var(--icon-stroke); flex: none; }
 
 :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; border-radius: var(--radius-sm); }
+/* cards are links: show the focus ring around the whole card */
+.pcard:focus-visible, .tile:focus-visible, .cnav__item:focus-visible { border-radius: var(--card-radius); }
 .on-dark :focus-visible, .on-dark:focus-visible { outline-color: var(--color-focus-on-dark); }
 
 .skip-link { position: absolute; left: var(--space-4); top: -4rem; z-index: 100; background: var(--color-accent); color: var(--color-brand); padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); transition: top var(--duration-fast); }
@@ -31,7 +33,7 @@ button { font: inherit; color: inherit; }
 
 /* ---- layout ---- */
 .container { width: 100%; max-width: calc(var(--container) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
-.section { padding-block: var(--section-y); }
+.section { padding-block: var(--section-y); background: var(--color-bg); }
 .section--dark { background: var(--color-dark-bg); color: var(--color-on-dark); }
 .section--dark h1, .section--dark h2, .section--dark h3 { color: var(--color-on-dark-accent); }
 .section--alt { background: var(--color-bg-alt); }
@@ -49,7 +51,9 @@ button { font: inherit; color: inherit; }
   font-family: var(--font-sans); font-size: var(--btn-font); font-weight: 500; line-height: 1.2; text-align: center; text-decoration: none; cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
 }
-.btn:active { transform: translateY(1px); }
+.btn:hover { box-shadow: var(--shadow-sm); }
+.btn:active { transform: translateY(1px); box-shadow: none; }
+.btn:focus-visible { outline-offset: 4px; border-radius: var(--btn-radius); }
 .btn--primary { background: var(--btn-primary-bg); color: var(--btn-primary-fg); }
 .btn--primary:hover { background: var(--btn-primary-bg-hover); }
 .btn--sand { background: var(--btn-sand-bg); color: var(--btn-sand-fg); }
@@ -64,8 +68,9 @@ button { font: inherit; color: inherit; }
 
 /* ---- scroll reveal (only when JS is on and motion is allowed) ---- */
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity var(--duration-slow) var(--ease), transform var(--duration-slow) var(--ease); transition-delay: calc(var(--reveal-i, 0) * 80ms); }
-  .js [data-reveal].is-visible { opacity: 1; transform: none; }
+  /* slide up 24px + fade in, 0.8s; --reveal-i is the neighbour index (0..3) → up to 100ms between neighbours; plays once */
+  .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity var(--duration-slow) var(--ease), transform var(--duration-slow) var(--ease); transition-delay: calc(var(--reveal-i, 0) * 100ms); will-change: opacity, transform; }
+  .js [data-reveal].is-visible { opacity: 1; transform: none; will-change: auto; }
 }
 
 /* ---- photo frame: fixed ratio + one background colour so all catalog photos look alike ---- */

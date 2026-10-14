@@ -64,7 +64,7 @@ const productLd = {
     </nav>
 
     <div class="product__grid">
-      <header class="product__head">
+      <header class="product__head" data-reveal>
         <p class="badge">{p.type}</p>
         <h1>{p.name}</h1>
         <p class="product__lead">{p.shortDescription}</p>
@@ -74,7 +74,7 @@ const productLd = {
         <Gallery product={p} />
       </div>
 
-      <div class="product__buy">
+      <div class="product__buy" data-reveal style="--reveal-i:1">
         <p class="product__price">{priceText(p)}</p>
         <p class="product__price-note">{site.legal.priceNote}</p>
         <a class="btn btn--primary btn--lg product__cta" href={site.contacts.phoneHref}>
@@ -89,7 +89,7 @@ const productLd = {
       </div>
     </div>
 
-    <section class="info" aria-label="Описание и характеристики">
+    <section class="info" aria-label="Описание и характеристики" data-reveal>
       <div class="tabs" data-tabs>
         <div class="tabs__list" role="tablist" aria-label="Информация о модели">
           <button class="tabs__tab" role="tab" id="tab-desc" aria-controls="panel-desc" aria-selected="true" type="button">Описание</button>
@@ -131,9 +131,9 @@ const productLd = {
 
     {more.length > 0 && (
       <section class="more" aria-labelledby="more-title">
-        <h2 id="more-title">Вам также может понравиться</h2>
+        <h2 id="more-title" data-reveal>Вам также может понравиться</h2>
         <ul class="more__grid">
-          {more.map((m) => <ProductCard product={m} headingLevel={3} sizes="(min-width: 1100px) 270px, 45vw" />)}
+          {more.map((m, i) => <ProductCard product={m} index={i} headingLevel={3} sizes="(min-width: 1100px) 270px, 45vw" />)}
         </ul>
       </section>
     )}

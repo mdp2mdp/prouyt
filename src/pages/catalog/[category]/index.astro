@@ -28,7 +28,7 @@ const description = `${category.title} от мебельной фабрики «
   <div class="container catalog">
     <CategoryNav active={category.id} />
     <div class="catalog__main">
-      <header class="catalog__head">
+      <header class="catalog__head" data-reveal>
         <h1>{category.title}</h1>
         <p>{category.description}</p>
       </header>
@@ -48,9 +48,9 @@ const description = `${category.title} от мебельной фабрики «
       )}
 
       <ul class="grid" data-grid>
-        {list.map((p, i) => <ProductCard product={p} eager={i < 3} headingLevel={2} />)}
+        {list.map((p, i) => <ProductCard product={p} index={i % 3} eager={i < 3} headingLevel={2} />)}
       </ul>
-      <p class="catalog__note">{site.legal.priceNote}</p>
+      <p class="catalog__note" data-reveal>{site.legal.priceNote}</p>
     </div>
   </div>
   <script>

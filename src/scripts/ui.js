@@ -45,3 +45,25 @@ if (items.length) {
     items.forEach((el) => io.observe(el));
   }
 }
+
+// Hero scroll effect fallback for browsers without CSS scroll-driven animations.
+// (Where animation-timeline is supported the same effect is pure CSS and this block does nothing.)
+const stage = document.querySelector('[data-hero-stage]');
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (stage && !reduced && !(window.CSS && CSS.supports('animation-timeline: scroll()'))) {
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  let ticking = false;
+  let active = true;
+  const update = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    stage.style.setProperty('--p', clamp(window.scrollY / (0.6 * vh)).toFixed(3));
+    stage.style.setProperty('--q', clamp(window.scrollY / (0.36 * vh)).toFixed(3));
+  };
+  window.addEventListener('scroll', () => {
+    if (active && !ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  // stop work once the hero stage is far out of view
+  new IntersectionObserver(([e]) => { active = e.isIntersecting; if (active) update(); }).observe(stage);
+  update();
+}

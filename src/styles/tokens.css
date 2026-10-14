@@ -91,26 +91,26 @@
   --space-7: 3rem;
   --space-8: 4.5rem;
   --space-9: 6.5rem;
-  --section-y: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+  --section-y: clamp(4rem, 2.5rem + 6vw, 7.5rem);
   --gutter: clamp(1.25rem, 0.5rem + 3vw, 2.5rem);
   --container: 1200px;
   --container-narrow: 880px;
 
   /* radii, borders, shadows */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
   --radius-round: 999px;
   --border-thin: 1px;
-  --shadow-sm: 0 1px 2px rgb(24 42 30 / 0.06);
-  --shadow-md: 0 8px 24px -8px rgb(24 42 30 / 0.18);
-  --shadow-lg: 0 18px 40px -16px rgb(24 42 30 / 0.28);
+  --shadow-sm: 0 1px 3px rgb(24 42 30 / 0.05);
+  --shadow-md: 0 14px 34px -16px rgb(24 42 30 / 0.16);
+  --shadow-lg: 0 24px 48px -24px rgb(24 42 30 / 0.22);
 
   /* motion */
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 160ms;
   --duration: 280ms;
-  --duration-slow: 600ms;
+  --duration-slow: 800ms;
 
   --z-header: 50;
   --z-menu: 49;
@@ -124,11 +124,11 @@
   --color-bg: var(--paper-100);
   --color-bg-alt: var(--paper-200);
   --color-surface: var(--paper-50);
-  --color-border: var(--paper-300);
+  --color-border: var(--paper-200);
   --color-border-strong: var(--paper-400);
 
-  --color-text: var(--ink-800);
-  --color-text-strong: var(--ink-900);
+  --color-text: var(--ink-600);
+  --color-text-strong: var(--ink-800);
   --color-text-muted: var(--ink-500);
 
   --color-dark-bg: var(--green-900);
@@ -145,7 +145,7 @@
   --header-h: 4.5rem;
   --header-h-lg: 6rem;
 
-  --btn-radius: var(--radius-sm);
+  --btn-radius: var(--radius-md);
   --btn-pad-y: 0.85rem;
   --btn-pad-x: 1.6rem;
   --btn-font: var(--text-sm);
@@ -159,7 +159,7 @@
   --btn-outline-border-on-dark: rgb(242 233 205 / 0.55);
 
   --card-bg: var(--color-surface);
-  --card-border: var(--color-border);
+  --card-border: var(--paper-300);
   --card-radius: var(--radius-md);
   --card-shadow-hover: var(--shadow-md);
 

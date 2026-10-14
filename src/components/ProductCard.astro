@@ -2,11 +2,11 @@
 import Picture from './Picture.astro';
 import Icon from './Icon.astro';
 import { productUrl, priceText, dimsText, photoAlt } from '../lib/catalog.js';
-const { product: p, sizes = '(min-width: 1100px) 360px, (min-width: 640px) 45vw, 50vw', headingLevel = 3, eager = false } = Astro.props;
+const { product: p, index = 0, sizes = '(min-width: 1100px) 360px, (min-width: 640px) 45vw, 50vw', headingLevel = 3, eager = false } = Astro.props;
 const cover = p.images.cover;
 const H = `h${headingLevel}`;
 ---
-<li class="pcard-li" data-mechanism={p.mechanism ?? ''}>
+<li class="pcard-li" data-mechanism={p.mechanism ?? ''} data-reveal style={`--reveal-i:${index % 4}`}>
   <a class="pcard" href={productUrl(p)}>
     <span class="pcard__photo photo" class:list={{ 'photo--placeholder': !cover }}>
       {cover
@@ -25,8 +25,8 @@ const H = `h${headingLevel}`;
 </li>
 
 <style>
-  .pcard { display: flex; flex-direction: column; height: 100%; background: var(--card-bg); border: var(--border-thin) solid var(--card-border); border-radius: var(--card-radius); overflow: hidden; color: var(--color-text-strong); text-decoration: none; transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease); }
-  .pcard:hover { box-shadow: var(--card-shadow-hover); border-color: var(--color-border-strong); }
+  .pcard { display: flex; flex-direction: column; height: 100%; background: var(--card-bg); border: var(--border-thin) solid var(--card-border); border-radius: var(--card-radius); overflow: hidden; color: var(--color-text-strong); text-decoration: none; transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease), transform var(--duration) var(--ease); }
+  .pcard:hover { box-shadow: var(--card-shadow-hover); border-color: var(--color-border-strong); transform: translateY(-2px); }
   .pcard__photo :global(img) { transition: transform var(--duration-slow) var(--ease); }
   .pcard:hover .pcard__photo :global(img) { transform: scale(1.03); }
   .pcard__body { display: flex; flex-direction: column; flex: 1; padding: var(--space-4); }
@@ -43,6 +43,6 @@ const H = `h${headingLevel}`;
     .pcard__price { font-size: var(--text-sm); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .pcard:hover .pcard__photo :global(img), .pcard:hover :global(.pcard__arrow) { transform: none; }
+    .pcard:hover, .pcard:hover .pcard__photo :global(img), .pcard:hover :global(.pcard__arrow) { transform: none; }
   }
 </style>
