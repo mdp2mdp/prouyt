@@ -85,16 +85,18 @@ import { site, url } from '../../lib/site.js';
     :global(.js) .hero { top: var(--header-h-lg); }
   }
 
-  /* Browsers with scroll-driven animations: pure CSS */
+  /* Browsers with scroll-driven animations: pure CSS.
+     Longhand properties on purpose: the CSS minifier would merge the `animation` shorthand with `animation-timeline`
+     into a shorthand form that browsers reject, and the effect would silently stop working in the production build. */
   @keyframes hero-zoom { to { transform: scale(1.08); } }
   @keyframes hero-dim { to { opacity: 0.4; } }
   @keyframes hero-out { to { opacity: 0; transform: translateY(-9svh); } }
   @keyframes hero-fade { to { opacity: 0; } }
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
-      :global(.js) .hero__media { animation: hero-zoom linear both; animation-timeline: scroll(root block); animation-range: 0 calc(var(--pin-end) + var(--fade)); }
-      :global(.js) .hero__dim { animation: hero-dim linear both; animation-timeline: scroll(root block); animation-range: 0 calc(var(--pin-end) + var(--fade)); }
-      :global(.js) .hero__text { animation: hero-out linear both; animation-timeline: scroll(root block); animation-range: var(--pin-end) calc(var(--pin-end) + var(--fade)); }
+      :global(.js) .hero__media { animation-name: hero-zoom; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: scroll(root block); animation-range: 0 calc(var(--pin-end) + var(--fade)); }
+      :global(.js) .hero__dim { animation-name: hero-dim; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: scroll(root block); animation-range: 0 calc(var(--pin-end) + var(--fade)); }
+      :global(.js) .hero__text { animation-name: hero-out; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: scroll(root block); animation-range: var(--pin-end) calc(var(--pin-end) + var(--fade)); }
     }
     /* Fallback (no scroll-driven animations): a tiny script writes --p / --q (0..1) on the stage */
     @supports not (animation-timeline: scroll()) {
@@ -108,7 +110,7 @@ import { site, url } from '../../lib/site.js';
     @supports (animation-timeline: scroll()) {
       :global(.js) .hero__media { animation: none; }
       :global(.js) .hero__dim { animation: none; }
-      :global(.js) .hero__text { animation: hero-fade linear both; animation-timeline: scroll(root block); animation-range: var(--pin-end) calc(var(--pin-end) + var(--fade)); }
+      :global(.js) .hero__text { animation-name: hero-fade; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: scroll(root block); animation-range: var(--pin-end) calc(var(--pin-end) + var(--fade)); }
     }
     @supports not (animation-timeline: scroll()) {
       :global(.js) .hero__media { transform: none; }
