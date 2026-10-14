@@ -9,3 +9,6 @@ Thumbs.db
 .env
 docs/review/
 *.pdf
+
+# Customer questions: kept locally, not published
+ВОПРОСЫ_ЗАКАЗЧИКУ.md
