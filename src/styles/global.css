@@ -2,7 +2,6 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + var(--space-4)); }
 @media (min-width: 900px) { html { scroll-padding-top: calc(var(--header-h-lg) + var(--space-4)); } }
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body {
   margin: 0;
   background: var(--color-bg);

@@ -57,19 +57,32 @@ import { site, url } from '../../lib/site.js';
     .hero__media :global(.hero__img) { object-position: 50% 50%; }
   }
 
-  /* ---------- scroll effect: the hero pins briefly (~104vh track), the photo slowly zooms and darkens,
-     the text drifts up and fades, then the next block slides over it ---------- */
+  /* ---------- scroll effect ----------
+     The hero is pinned (sticky). The photo zooms and darkens while it is pinned. The text stays fully visible
+     until the next block (advantages) catches the hero (the pin ends) and starts moving up with it; only then it fades. */
   @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .hero-stage { --pin: 11svh; --fade: 7svh; position: relative; height: 103svh; }
-    :global(.js) .hero { position: sticky; top: var(--header-h); height: clamp(30rem, calc(100vh - var(--header-h)), 60rem); height: clamp(30rem, calc(100svh - var(--header-h)), 60rem); z-index: 1; }
+    :global(.js) .hero-stage {
+      --hh: clamp(30rem, calc(100vh - var(--header-h)), 60rem);
+      --hh: clamp(30rem, calc(100svh - var(--header-h)), 60rem); /* hero height while pinned */
+      --sh: 103svh;                                             /* stage (scroll track) height */
+      --pin-end: max(0px, calc(var(--sh) - var(--hh)));          /* scroll distance at which the hero stops being pinned */
+      --fade: 12svh;                                            /* text fades over this distance after the pin ends */
+      position: relative;
+      height: var(--sh);
+    }
+    :global(.js) .hero { position: sticky; top: var(--header-h); height: var(--hh); z-index: 1; }
     :global(.js) .hero__media, :global(.js) .hero__text { will-change: transform, opacity; }
     /* the blocks after the hero sit above the pinned photo and cover it as they arrive */
     :global(.js) .hero-stage ~ :global(section) { position: relative; z-index: 2; }
     :global(.js) .hero-stage + :global(section) { margin-top: -16svh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
   }
   @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
-    :global(.js) .hero-stage { height: 104svh; }
-    :global(.js) .hero { height: clamp(32rem, calc(100vh - var(--header-h-lg)), 60rem); height: clamp(32rem, calc(100svh - var(--header-h-lg)), 60rem); top: var(--header-h-lg); }
+    :global(.js) .hero-stage {
+      --hh: clamp(32rem, calc(100vh - var(--header-h-lg)), 60rem);
+      --hh: clamp(32rem, calc(100svh - var(--header-h-lg)), 60rem);
+      --sh: 104svh;
+    }
+    :global(.js) .hero { top: var(--header-h-lg); }
   }
 
   /* Browsers with scroll-driven animations: pure CSS */
@@ -79,9 +92,9 @@ import { site, url } from '../../lib/site.js';
   @keyframes hero-fade { to { opacity: 0; } }
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
-      :global(.js) .hero__media { animation: hero-zoom linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 11svh); }
-      :global(.js) .hero__dim { animation: hero-dim linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 11svh); }
-      :global(.js) .hero__text { animation: hero-out linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 7svh); }
+      :global(.js) .hero__media { animation: hero-zoom linear both; animation-timeline: scroll(root block); animation-range: 0 calc(var(--pin-end) + var(--fade)); }
+      :global(.js) .hero__dim { animation: hero-dim linear both; animation-timeline: scroll(root block); animation-range: 0 calc(var(--pin-end) + var(--fade)); }
+      :global(.js) .hero__text { animation: hero-out linear both; animation-timeline: scroll(root block); animation-range: var(--pin-end) calc(var(--pin-end) + var(--fade)); }
     }
     /* Fallback (no scroll-driven animations): a tiny script writes --p / --q (0..1) on the stage */
     @supports not (animation-timeline: scroll()) {
@@ -95,7 +108,7 @@ import { site, url } from '../../lib/site.js';
     @supports (animation-timeline: scroll()) {
       :global(.js) .hero__media { animation: none; }
       :global(.js) .hero__dim { animation: none; }
-      :global(.js) .hero__text { animation: hero-fade linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 7svh); }
+      :global(.js) .hero__text { animation: hero-fade linear both; animation-timeline: scroll(root block); animation-range: var(--pin-end) calc(var(--pin-end) + var(--fade)); }
     }
     @supports not (animation-timeline: scroll()) {
       :global(.js) .hero__media { transform: none; }
