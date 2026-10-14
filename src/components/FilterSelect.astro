@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+// Custom rounded dropdown (the native <select> popup is drawn by the OS and is always square).
+// Markup: button + listbox. Behaviour lives in src/scripts/catalog.js.
+const { label = 'Фильтры:', title, allLabel, options } = Astro.props; // options: [{ value, label, count }]
+---
+<div class="filter" data-filter hidden>
+  <span class="filter__label" id="filter-label">{label}</span>
+  <div class="dd" data-dd>
+    <button class="dd__btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-label dd-value" data-dd-btn>
+      <span class="dd__title">{title}:</span>
+      <span class="dd__value" id="dd-value" data-dd-value>{allLabel}</span>
+      <Icon name="chevron" size={18} class="dd__chev" />
+    </button>
+    <ul class="dd__list" role="listbox" aria-label={title} tabindex="-1" hidden data-dd-list>
+      <li class="dd__opt" role="option" aria-selected="true" data-value="" tabindex="-1">
+        <span>{allLabel}</span>
+        <Icon name="check" size={18} class="dd__check" />
+      </li>
+      {options.map((o) => (
+        <li class="dd__opt" role="option" aria-selected="false" data-value={o.value} tabindex="-1">
+          <span>{o.label} <span class="dd__count">{o.count}</span></span>
+          <Icon name="check" size={18} class="dd__check" />
+        </li>
+      ))}
+    </ul>
+  </div>
+  <p class="filter__status" role="status" aria-live="polite" data-filter-status></p>
+</div>
+
+<style>
+  .filter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block: var(--space-5); }
+  .filter[hidden] { display: none; }
+  .filter__label { font-size: var(--text-sm); color: var(--color-text-muted); }
+  .filter__status { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+  .dd { position: relative; }
+  .dd__btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 2.75rem; padding: 0 var(--space-4); border: var(--border-thin) solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text-strong); font: inherit; font-size: var(--text-sm); cursor: pointer; transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease), background-color var(--duration-fast) var(--ease); }
+  .dd__btn:hover { border-color: var(--color-brand); box-shadow: var(--shadow-sm); }
+  .dd__btn[aria-expanded='true'] { border-color: var(--color-brand); box-shadow: var(--shadow-sm); }
+  .dd__title { color: var(--color-text-muted); }
+  .dd__value { font-weight: 500; }
+  .dd__btn :global(.dd__chev) { transition: transform var(--duration) var(--ease); }
+  .dd__btn[aria-expanded='true'] :global(.dd__chev) { transform: rotate(180deg); }
+
+  .dd__list { position: absolute; top: calc(100% + var(--space-2)); left: 0; z-index: 20; min-width: 100%; width: max-content; max-width: min(20rem, 90vw); margin: 0; padding: var(--space-2); background: var(--color-surface); border: var(--border-thin) solid var(--color-border-strong); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); }
+  .dd__list[hidden] { display: none; }
+  .dd__opt { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 2.75rem; padding: 0 var(--space-3); border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--color-text-strong); cursor: pointer; }
+  .dd__opt:hover, .dd__opt:focus-visible, .dd__opt.is-active { background: var(--color-bg-alt); outline: none; }
+  .dd__opt :global(.dd__check) { visibility: hidden; color: var(--color-brand); }
+  .dd__opt[aria-selected='true'] { font-weight: 500; }
+  .dd__opt[aria-selected='true'] :global(.dd__check) { visibility: visible; }
+  .dd__count { margin-left: var(--space-1); color: var(--color-text-muted); font-weight: 400; }
+  @media (prefers-reduced-motion: no-preference) {
+    .dd__list:not([hidden]) { animation: dd-in var(--duration) var(--ease); }
+    @keyframes dd-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  }
+</style>

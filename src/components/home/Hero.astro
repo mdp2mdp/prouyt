@@ -52,18 +52,18 @@ import { site, url } from '../../lib/site.js';
     .hero__media :global(.hero__img) { object-position: 50% 50%; }
   }
 
-  /* ---------- scroll effect: the hero pins briefly (~110vh track), the photo slowly zooms and darkens,
+  /* ---------- scroll effect: the hero pins briefly (~104vh track), the photo slowly zooms and darkens,
      the text drifts up and fades, then the next block slides over it ---------- */
   @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .hero-stage { --pin: 18svh; --fade: 10svh; position: relative; height: 108svh; }
+    :global(.js) .hero-stage { --pin: 11svh; --fade: 7svh; position: relative; height: 103svh; }
     :global(.js) .hero { position: sticky; top: var(--header-h); height: clamp(30rem, calc(100vh - var(--header-h)), 60rem); height: clamp(30rem, calc(100svh - var(--header-h)), 60rem); z-index: 1; }
     :global(.js) .hero__media, :global(.js) .hero__text { will-change: transform, opacity; }
     /* the blocks after the hero sit above the pinned photo and cover it as they arrive */
     :global(.js) .hero-stage ~ :global(section) { position: relative; z-index: 2; }
-    :global(.js) .hero-stage + :global(section) { margin-top: -20svh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+    :global(.js) .hero-stage + :global(section) { margin-top: -16svh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
   }
   @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
-    :global(.js) .hero-stage { height: 110svh; }
+    :global(.js) .hero-stage { height: 104svh; }
     :global(.js) .hero { height: clamp(32rem, calc(100vh - var(--header-h-lg)), 60rem); height: clamp(32rem, calc(100svh - var(--header-h-lg)), 60rem); top: var(--header-h-lg); }
   }
 
@@ -74,9 +74,9 @@ import { site, url } from '../../lib/site.js';
   @keyframes hero-fade { to { opacity: 0; } }
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
-      :global(.js) .hero__media { animation: hero-zoom linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 18svh); }
-      :global(.js) .hero__dim { animation: hero-dim linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 18svh); }
-      :global(.js) .hero__text { animation: hero-out linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 10svh); }
+      :global(.js) .hero__media { animation: hero-zoom linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 11svh); }
+      :global(.js) .hero__dim { animation: hero-dim linear both; animation-timeline: scroll(root block); animation-range: 0 var(--pin, 11svh); }
+      :global(.js) .hero__text { animation: hero-out linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 7svh); }
     }
     /* Fallback (no scroll-driven animations): a tiny script writes --p / --q (0..1) on the stage */
     @supports not (animation-timeline: scroll()) {
@@ -90,7 +90,7 @@ import { site, url } from '../../lib/site.js';
     @supports (animation-timeline: scroll()) {
       :global(.js) .hero__media { animation: none; }
       :global(.js) .hero__dim { animation: none; }
-      :global(.js) .hero__text { animation: hero-fade linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 10svh); }
+      :global(.js) .hero__text { animation: hero-fade linear both; animation-timeline: scroll(root block); animation-range: 0 var(--fade, 7svh); }
     }
     @supports not (animation-timeline: scroll()) {
       :global(.js) .hero__media { transform: none; }

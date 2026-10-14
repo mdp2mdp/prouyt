@@ -2,7 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import CategoryNav from '../../../components/CategoryNav.astro';
 import ProductCard from '../../../components/ProductCard.astro';
-import Icon from '../../../components/Icon.astro';
+import FilterSelect from '../../../components/FilterSelect.astro';
 import { enabledCategories, productsOf, mechanismsOf, categoryUrl } from '../../../lib/catalog.js';
 import { site, url } from '../../../lib/site.js';
 
@@ -34,17 +34,7 @@ const description = `${category.title} от мебельной фабрики «
       </header>
 
       {mechanisms.length > 1 && (
-        <div class="filter">
-          <label class="filter__label" for="filter-mechanism">Фильтры:</label>
-          <span class="filter__select">
-            <select id="filter-mechanism" aria-label="Механизм трансформации" data-filter-mechanism>
-              <option value="">Механизм: все</option>
-              {mechanisms.map((m) => <option value={m}>{m}</option>)}
-            </select>
-            <Icon name="chevron" size={18} />
-          </span>
-          <p class="filter__status" role="status" aria-live="polite" data-filter-status></p>
-        </div>
+        <FilterSelect title="Механизм" allLabel="Все" options={mechanisms.map((m) => ({ value: m, label: m, count: list.filter((p) => p.mechanism === m).length }))} />
       )}
 
       <ul class="grid" data-grid>
@@ -64,15 +54,8 @@ const description = `${category.title} от мебельной фабрики «
   .catalog__head { padding-bottom: var(--space-5); border-bottom: var(--border-thin) solid var(--color-border); }
   .catalog__head h1 { font-size: var(--text-3xl); }
   .catalog__head p { margin-top: var(--space-3); max-width: 44rem; color: var(--color-text); }
-  .filter { display: flex; align-items: center; gap: var(--space-3); margin-block: var(--space-5); }
-  .filter__label { font-size: var(--text-sm); }
-  .filter__status { font-size: var(--text-sm); color: var(--color-text-muted); }
-  .filter__select { position: relative; display: inline-flex; align-items: center; }
-  .filter__select select { appearance: none; min-height: 2.75rem; padding: 0 2.5rem 0 var(--space-4); border: var(--border-thin) solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text-strong); font: inherit; font-size: var(--text-sm); cursor: pointer; }
-  .filter__select select:hover { border-color: var(--color-brand); }
-  .filter__select :global(.icon) { position: absolute; right: var(--space-3); pointer-events: none; }
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); margin-top: var(--space-5); }
-  .filter + .grid { margin-top: 0; }
+  :global(.filter) + .grid { margin-top: 0; }
   .grid :global(li[hidden]) { display: none; }
   .catalog__note { margin-top: var(--space-6); font-size: var(--text-xs); color: var(--color-text-muted); }
   @media (min-width: 640px) {
