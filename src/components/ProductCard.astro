@@ -1,0 +1,48 @@
+---
+import Picture from './Picture.astro';
+import Icon from './Icon.astro';
+import { productUrl, priceText, dimsText, photoAlt } from '../lib/catalog.js';
+const { product: p, sizes = '(min-width: 1100px) 360px, (min-width: 640px) 45vw, 50vw', headingLevel = 3, eager = false } = Astro.props;
+const cover = p.images.cover;
+const H = `h${headingLevel}`;
+---
+<li class="pcard-li" data-mechanism={p.mechanism ?? ''}>
+  <a class="pcard" href={productUrl(p)}>
+    <span class="pcard__photo photo" class:list={{ 'photo--placeholder': !cover }}>
+      {cover
+        ? <Picture id={cover.id} alt={photoAlt(p, cover)} sizes={sizes} loading={eager ? 'eager' : 'lazy'} priority={false} />
+        : <span><Icon name="armchair" size={32} /><span>Фото скоро</span></span>}
+    </span>
+    <span class="pcard__body">
+      <H class="pcard__name">{p.name}</H>
+      <span class="pcard__dims">{dimsText(p)}</span>
+      <span class="pcard__foot">
+        <span class="pcard__price">{priceText(p)}</span>
+        <Icon name="arrow" size={20} class="pcard__arrow" />
+      </span>
+    </span>
+  </a>
+</li>
+
+<style>
+  .pcard { display: flex; flex-direction: column; height: 100%; background: var(--card-bg); border: var(--border-thin) solid var(--card-border); border-radius: var(--card-radius); overflow: hidden; color: var(--color-text-strong); text-decoration: none; transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease); }
+  .pcard:hover { box-shadow: var(--card-shadow-hover); border-color: var(--color-border-strong); }
+  .pcard__photo :global(img) { transition: transform var(--duration-slow) var(--ease); }
+  .pcard:hover .pcard__photo :global(img) { transform: scale(1.03); }
+  .pcard__body { display: flex; flex-direction: column; flex: 1; padding: var(--space-4); }
+  .pcard__name { font-family: var(--font-serif); font-size: var(--text-lg); text-transform: uppercase; letter-spacing: 0.02em; line-height: var(--leading-snug); }
+  .pcard__dims { margin-top: var(--space-1); font-size: var(--text-xs); color: var(--color-text-muted); min-height: 1.3em; }
+  .pcard__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-top: auto; padding-top: var(--space-3); }
+  .pcard__price { font-weight: 600; font-size: var(--text-base); }
+  .pcard :global(.pcard__arrow) { transition: transform var(--duration) var(--ease); }
+  .pcard:hover :global(.pcard__arrow) { transform: translateX(4px); }
+  @media (max-width: 639px) {
+    .pcard__body { padding: var(--space-3); }
+    .pcard__name { font-size: var(--text-base); }
+    .pcard__foot { flex-wrap: wrap; row-gap: var(--space-1); }
+    .pcard__price { font-size: var(--text-sm); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pcard:hover .pcard__photo :global(img), .pcard:hover :global(.pcard__arrow) { transform: none; }
+  }
+</style>

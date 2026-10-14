@@ -1,0 +1,205 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Gallery from '../../../components/Gallery.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import Icon from '../../../components/Icon.astro';
+import { products, categoryById, categoryUrl, productUrl, priceText, features, related, lc } from '../../../lib/catalog.js';
+import { imageInfo } from '../../../lib/images.js';
+import { site, url, formatPrice, priceOf } from '../../../lib/site.js';
+
+export function getStaticPaths() {
+  return products
+    .filter((p) => categoryById(p.category)?.enabled)
+    .map((p) => ({ params: { category: p.category, slug: p.slug }, props: { product: p } }));
+}
+const { product: p } = Astro.props;
+const category = categoryById(p.category);
+const abs = (path) => new URL(path, Astro.site).href;
+const feats = features(p);
+const more = related(p, 4);
+const modePrice = (x) => formatPrice(site.pricing.priceMode === 'rrp' ? x.priceRrp : x.pricePromo);
+
+const title = `${p.name} — ${lc(p.type)} | ${site.seo.titleSuffix}`;
+const description = `${p.shortDescription} ${p.name}: цена ${priceText(p)}, характеристики и фото. Мебельная фабрика «ПРОУЮТ».`;
+
+const crumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    ['Главная', url('')],
+    ['Каталог', url('catalog/')],
+    [category.title, categoryUrl(category)],
+    [p.name, productUrl(p)],
+  ].map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(item) })),
+};
+const productLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: p.name,
+  description: p.shortDescription,
+  sku: p.slug,
+  category: category.title,
+  brand: { '@type': 'Brand', name: site.brand.name },
+  manufacturer: { '@type': 'Organization', name: site.brand.legalName },
+  ...(p.images.cover ? { image: p.images.gallery.slice(0, 4).map((g) => abs(imageInfo(g.id).fallback(1600))) } : {}),
+  url: abs(productUrl(p)),
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'RUB',
+    lowPrice: priceOf(p),
+    url: abs(productUrl(p)),
+  },
+};
+---
+<Base title={title} description={description} jsonLd={[productLd, crumbs]}>
+  <div class="container product">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <ol>
+        <li><a href={url('')}>Главная</a></li>
+        <li><a href={url('catalog/')}>Каталог</a></li>
+        <li><a href={categoryUrl(category)}>{category.title}</a></li>
+        <li aria-current="page">{p.name}</li>
+      </ol>
+    </nav>
+
+    <div class="product__grid">
+      <header class="product__head">
+        <p class="badge">{p.type}</p>
+        <h1>{p.name}</h1>
+        <p class="product__lead">{p.shortDescription}</p>
+      </header>
+
+      <div class="product__gallery">
+        <Gallery product={p} />
+      </div>
+
+      <div class="product__buy">
+        <p class="product__price">{priceText(p)}</p>
+        <p class="product__price-note">{site.legal.priceNote}</p>
+        <a class="btn btn--primary btn--lg product__cta" href={site.contacts.phoneHref}>
+          <Icon name="phone" size={20} /> Позвонить
+        </a>
+        <p class="product__cta-note">Подскажем по тканям, цветам и срокам: <a href={site.contacts.phoneHref}>{site.contacts.phone}</a></p>
+        {feats.length > 0 && (
+          <ul class="feats">
+            {feats.map((f) => <li><Icon name={f.icon} size={22} /><span>{f.text}</span></li>)}
+          </ul>
+        )}
+      </div>
+    </div>
+
+    <section class="info" aria-label="Описание и характеристики">
+      <div class="tabs" data-tabs>
+        <div class="tabs__list" role="tablist" aria-label="Информация о модели">
+          <button class="tabs__tab" role="tab" id="tab-desc" aria-controls="panel-desc" aria-selected="true" type="button">Описание</button>
+          <button class="tabs__tab" role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="false" type="button">Характеристики</button>
+        </div>
+        <div class="tabs__panel" role="tabpanel" id="panel-desc" aria-labelledby="tab-desc" tabindex="0">
+          <h2 class="visually-hidden">Описание</h2>
+          {p.description.map((para) => <p>{para}</p>)}
+        </div>
+        <div class="tabs__panel" role="tabpanel" id="panel-specs" aria-labelledby="tab-specs" tabindex="0">
+          <h2 class="visually-hidden">Характеристики</h2>
+          <dl class="specs">
+            {p.specs.map((s) => (
+              <div class="specs__row"><dt>{s.label}</dt><dd>{s.value}</dd></div>
+            ))}
+          </dl>
+          {p.modules && (
+            <>
+              <h3 class="specs__title">Модули</h3>
+              <table class="ptable">
+                <thead><tr><th scope="col">Модуль</th><th scope="col">Габариты</th><th scope="col">Цена</th></tr></thead>
+                <tbody>
+                  {p.modules.map((m) => <tr><th scope="row">{m.name}</th><td>{m.dims.replace(/Дл\.\s*Х\s*Гл\.\s*Х\s*Выс\.\s*/i, '')} см</td><td>{modePrice(m)}</td></tr>)}
+                </tbody>
+              </table>
+              <h3 class="specs__title">Готовые наборы</h3>
+              <table class="ptable">
+                <thead><tr><th scope="col">Набор</th><th scope="col">Габариты</th><th scope="col">Цена</th></tr></thead>
+                <tbody>
+                  {p.sets.map((m) => <tr><th scope="row">{m.name}</th><td>{m.dims.replace(/Дл\.\s*Х\s*Гл\.\s*Х\s*Выс\.\s*/i, '')} см</td><td>{modePrice(m)}</td></tr>)}
+                </tbody>
+              </table>
+            </>
+          )}
+        </div>
+      </div>
+      <p class="info__note"><Icon name="info" size={18} /> {site.legal.colorNote}</p>
+    </section>
+
+    {more.length > 0 && (
+      <section class="more" aria-labelledby="more-title">
+        <h2 id="more-title">Вам также может понравиться</h2>
+        <ul class="more__grid">
+          {more.map((m) => <ProductCard product={m} headingLevel={3} sizes="(min-width: 1100px) 270px, 45vw" />)}
+        </ul>
+      </section>
+    )}
+  </div>
+  <script>
+    import '../../../scripts/product.js';
+  </script>
+</Base>
+
+<style>
+  .product { padding-block: var(--space-4) var(--space-8); }
+  .crumbs ol { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); font-size: var(--text-xs); color: var(--color-text-muted); }
+  .crumbs li + li::before { content: '›'; margin-right: var(--space-2); }
+  .crumbs a { text-decoration: none; padding-block: var(--space-2); display: inline-block; }
+  .crumbs a:hover { text-decoration: underline; color: var(--color-text-strong); }
+  .crumbs [aria-current] { color: var(--color-text-strong); padding-block: var(--space-2); }
+
+  .product__grid { display: grid; gap: var(--space-5); margin-top: var(--space-3); grid-template-areas: 'head' 'gallery' 'buy'; }
+  .product__head { grid-area: head; }
+  .product__gallery { grid-area: gallery; min-width: 0; }
+  .product__buy { grid-area: buy; }
+  .badge { display: inline-block; padding: 0.2rem 0.7rem; border-radius: var(--radius-sm); background: var(--color-bg-alt); border: var(--border-thin) solid var(--color-border); font-size: var(--text-xs); color: var(--color-text); }
+  .product__head h1 { margin-top: var(--space-3); font-size: var(--text-3xl); text-transform: uppercase; letter-spacing: 0.02em; }
+  .product__lead { margin-top: var(--space-3); max-width: 32rem; }
+  .product__price { font-size: var(--text-2xl); font-weight: 600; color: var(--color-text-strong); line-height: 1.2; }
+  .product__price-note { margin-top: var(--space-1); font-size: var(--text-xs); color: var(--color-text-muted); }
+  .product__cta { margin-top: var(--space-5); width: 100%; }
+  .product__cta-note { margin-top: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); }
+  .product__cta-note a { color: var(--color-text-strong); white-space: nowrap; }
+  .feats { display: grid; gap: var(--space-3); margin-top: var(--space-6); }
+  .feats li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); }
+  .feats :global(.icon) { color: var(--color-brand); }
+
+  .info { margin-top: var(--space-8); }
+  .tabs__list { display: none; }
+  :global(.js) .tabs__list { display: flex; border-bottom: var(--border-thin) solid var(--color-border); }
+  .tabs__tab { flex: 1; min-height: 3.25rem; padding: var(--space-3) var(--space-5); border: 0; border-bottom: 2px solid transparent; background: none; font-size: var(--text-base); color: var(--color-text-muted); cursor: pointer; margin-bottom: -1px; transition: color var(--duration-fast), border-color var(--duration-fast); }
+  .tabs__tab:hover { color: var(--color-text-strong); }
+  .tabs__tab[aria-selected='true'] { color: var(--color-text-strong); border-bottom-color: var(--color-brand); font-weight: 500; }
+  .tabs__panel { padding-block: var(--space-6); max-width: 52rem; }
+  .tabs__panel[hidden] { display: none; }
+  .tabs__panel > p + p { margin-top: var(--space-4); }
+  .specs__row { display: grid; grid-template-columns: 1fr; gap: var(--space-1); padding-block: var(--space-3); border-bottom: var(--border-thin) solid var(--color-border); }
+  .specs dt { color: var(--color-text-muted); font-size: var(--text-sm); }
+  .specs dd { margin: 0; color: var(--color-text-strong); }
+  .specs__title { margin-top: var(--space-7); margin-bottom: var(--space-3); font-size: var(--text-xl); }
+  .ptable { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .ptable th, .ptable td { padding: var(--space-3) var(--space-3) var(--space-3) 0; text-align: left; vertical-align: top; border-bottom: var(--border-thin) solid var(--color-border); }
+  .ptable thead th { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-text-muted); font-weight: 500; }
+  .ptable tbody th { font-weight: 400; color: var(--color-text-strong); }
+  .ptable td:last-child { white-space: nowrap; font-weight: 600; text-align: right; }
+  .ptable thead th:last-child { text-align: right; }
+  .info__note { display: flex; gap: var(--space-2); align-items: flex-start; font-size: var(--text-xs); color: var(--color-text-muted); max-width: 40rem; }
+  .info__note :global(.icon) { margin-top: 0.1rem; }
+
+  .more { margin-top: var(--space-8); }
+  .more h2 { text-align: center; font-size: var(--text-2xl); margin-bottom: var(--space-6); }
+  .more__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+
+  @media (min-width: 640px) {
+    .specs__row { grid-template-columns: 14rem 1fr; gap: var(--space-4); }
+    .more__grid { gap: var(--space-4); }
+  }
+  @media (min-width: 900px) {
+    .product__grid { grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr); column-gap: var(--space-8); grid-template-areas: 'head gallery' 'buy gallery'; grid-template-rows: auto 1fr; align-items: start; }
+    .product__cta { width: auto; min-width: 14rem; }
+    .more__grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
+    .tabs__tab { flex: none; min-width: 12rem; }
+  }
+</style>

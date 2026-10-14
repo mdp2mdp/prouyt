@@ -1,0 +1,88 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import Icon from '../../../components/Icon.astro';
+import { enabledCategories, productsOf, mechanismsOf, categoryUrl } from '../../../lib/catalog.js';
+import { site, url } from '../../../lib/site.js';
+
+export function getStaticPaths() {
+  return enabledCategories.map((c) => ({ params: { category: c.slug }, props: { category: c } }));
+}
+const { category } = Astro.props;
+const list = productsOf(category.id);
+const mechanisms = mechanismsOf(list);
+
+const crumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: new URL(url(''), Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: 'Каталог', item: new URL(url('catalog/'), Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: category.title, item: new URL(categoryUrl(category), Astro.site).href },
+  ],
+};
+const description = `${category.title} от мебельной фабрики «ПРОУЮТ»: ${list.length} ${list.length === 1 ? 'модель' : list.length < 5 ? 'модели' : 'моделей'}, цены от производителя. Собственное производство, доставка по всей России.`;
+---
+<Base title={`${category.title} — каталог | ${site.seo.titleSuffix}`} description={description} jsonLd={[crumbs]}>
+  <div class="container catalog">
+    <CategoryNav active={category.id} />
+    <div class="catalog__main">
+      <header class="catalog__head">
+        <h1>{category.title}</h1>
+        <p>{category.description}</p>
+      </header>
+
+      {mechanisms.length > 1 && (
+        <div class="filter">
+          <label class="filter__label" for="filter-mechanism">Фильтры:</label>
+          <span class="filter__select">
+            <select id="filter-mechanism" aria-label="Механизм трансформации" data-filter-mechanism>
+              <option value="">Механизм: все</option>
+              {mechanisms.map((m) => <option value={m}>{m}</option>)}
+            </select>
+            <Icon name="chevron" size={18} />
+          </span>
+          <p class="visually-hidden" role="status" aria-live="polite" data-filter-status></p>
+        </div>
+      )}
+
+      <ul class="grid" data-grid>
+        {list.map((p, i) => <ProductCard product={p} eager={i < 3} />)}
+      </ul>
+      <p class="catalog__note">{site.legal.priceNote}</p>
+    </div>
+  </div>
+  <script>
+    import '../../../scripts/catalog.js';
+  </script>
+</Base>
+
+<style>
+  .catalog { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); padding-block: var(--space-5) var(--space-8); align-items: start; }
+  .catalog > * { min-width: 0; }
+  .catalog__head { padding-bottom: var(--space-5); border-bottom: var(--border-thin) solid var(--color-border); }
+  .catalog__head h1 { font-size: var(--text-3xl); }
+  .catalog__head p { margin-top: var(--space-3); max-width: 44rem; color: var(--color-text); }
+  .filter { display: flex; align-items: center; gap: var(--space-3); margin-block: var(--space-5); }
+  .filter__label { font-size: var(--text-sm); }
+  .filter__select { position: relative; display: inline-flex; align-items: center; }
+  .filter__select select { appearance: none; min-height: 2.75rem; padding: 0 2.5rem 0 var(--space-4); border: var(--border-thin) solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text-strong); font: inherit; font-size: var(--text-sm); cursor: pointer; }
+  .filter__select select:hover { border-color: var(--color-brand); }
+  .filter__select :global(.icon) { position: absolute; right: var(--space-3); pointer-events: none; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); margin-top: var(--space-5); }
+  .filter + .grid { margin-top: 0; }
+  .grid :global(li[hidden]) { display: none; }
+  .catalog__note { margin-top: var(--space-6); font-size: var(--text-xs); color: var(--color-text-muted); }
+  @media (min-width: 640px) {
+    .grid { gap: var(--space-4); }
+  }
+  @media (min-width: 900px) {
+    .catalog { grid-template-columns: 16rem 1fr; gap: var(--space-7); padding-top: var(--space-7); }
+    .catalog__head { padding-bottom: var(--space-5); }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-5); }
+  }
+  @media (min-width: 1100px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

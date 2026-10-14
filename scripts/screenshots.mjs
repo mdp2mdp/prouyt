@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const out = process.argv[2];
-const pagePath = process.argv[3] || '/prouyt/';
+const pagePath = process.env.PAGE_PATH || process.argv[3] || '/prouyt/';
 const origin = process.argv[4] || 'http://localhost:4321';
 const widths = (process.env.WIDTHS || '360,390,768,1024,1440').split(',').map(Number);
 fs.mkdirSync(out, { recursive: true });

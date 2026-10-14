@@ -1,0 +1,82 @@
+---
+import Picture from './Picture.astro';
+import Icon from './Icon.astro';
+import { photoAlt } from '../lib/catalog.js';
+const { product: p } = Astro.props;
+const imgs = p.images.gallery;
+const many = imgs.length > 1;
+let interiorN = 0;
+const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN : 0));
+---
+{imgs.length === 0 ? (
+  <div class="gallery">
+    <div class="photo photo--placeholder gallery__empty">
+      <span><Icon name="armchair" size={40} /><span>Фото скоро</span></span>
+    </div>
+  </div>
+) : (
+  <div class="gallery" data-gallery>
+    <div class="gallery__main">
+      <ul class="gallery__track" tabindex="0" aria-label={`Фотографии: ${p.name}`} data-track>
+        {imgs.map((g, i) => (
+          <li class="gallery__slide photo" role="group" aria-roledescription="слайд" aria-label={`${i + 1} из ${imgs.length}`}>
+            <Picture
+              id={g.id}
+              alt={alts[i]}
+              sizes="(min-width: 1100px) 720px, (min-width: 900px) 55vw, 100vw"
+              priority={i === 0}
+              fallbackWidth={1600}
+            />
+          </li>
+        ))}
+      </ul>
+      {many && (
+        <>
+          <button class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Предыдущее фото" data-prev><Icon name="arrow-left" size={22} /></button>
+          <button class="gallery__arrow gallery__arrow--next" type="button" aria-label="Следующее фото" data-next><Icon name="arrow" size={22} /></button>
+          <p class="gallery__count" aria-live="polite" data-count>1 / {imgs.length}</p>
+        </>
+      )}
+    </div>
+    {many && (
+      <ul class="gallery__thumbs" data-thumbs>
+        {imgs.map((g, i) => (
+          <li>
+            <button class="gallery__thumb" type="button" aria-label={`Показать фото ${i + 1} из ${imgs.length}`} aria-current={i === 0 ? 'true' : undefined} data-thumb={i}>
+              <span class="photo">
+                <Picture id={g.id} alt="" sizes="96px" fallbackWidth={480} />
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+)}
+
+<style>
+  .gallery__main { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--photo-bg); }
+  .gallery__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .gallery__track::-webkit-scrollbar { display: none; }
+  .gallery__track:focus-visible { outline-offset: -3px; }
+  .gallery__slide { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+  .gallery__empty { border-radius: var(--radius-lg); }
+  .gallery__arrow { position: absolute; top: 50%; translate: 0 -50%; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: var(--radius-round); background: rgb(255 255 255 / 0.92); color: var(--color-brand); box-shadow: var(--shadow-md); cursor: pointer; transition: background-color var(--duration-fast), opacity var(--duration-fast); }
+  .gallery__arrow:hover { background: #fff; }
+  .gallery__arrow[disabled] { opacity: 0.35; cursor: default; }
+  .gallery__arrow--prev { left: var(--space-3); }
+  .gallery__arrow--next { right: var(--space-3); }
+  .gallery__count { position: absolute; right: var(--space-3); bottom: var(--space-3); padding: 0.15rem 0.6rem; border-radius: var(--radius-round); background: rgb(24 42 30 / 0.72); color: var(--color-on-dark); font-size: var(--text-xs); }
+  .gallery__thumbs { display: flex; gap: var(--space-2); margin-top: var(--space-3); overflow-x: auto; padding: 3px; scrollbar-width: thin; }
+  .gallery__thumbs li { flex: none; }
+  .gallery__thumb { display: block; width: 5.5rem; padding: 0; border: 2px solid transparent; border-radius: var(--radius-md); background: none; cursor: pointer; overflow: hidden; opacity: 0.75; transition: opacity var(--duration-fast), border-color var(--duration-fast); }
+  .gallery__thumb:hover { opacity: 1; }
+  .gallery__thumb[aria-current='true'] { border-color: var(--color-brand); opacity: 1; }
+  .gallery__thumb .photo { border-radius: calc(var(--radius-md) - 2px); }
+  @media (min-width: 900px) {
+    .gallery__thumb { width: 7rem; }
+  }
+  @media (max-width: 899px) {
+    .gallery__arrow { width: 2.25rem; height: 2.25rem; }
+  }
+</style>

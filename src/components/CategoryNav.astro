@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import { enabledCategories, categoryUrl } from '../lib/catalog.js';
+import { site } from '../lib/site.js';
+const { active } = Astro.props;
+---
+<aside class="cnav" aria-label="Разделы каталога">
+  <nav>
+    <ul class="cnav__list" data-cnav>
+      {enabledCategories.map((c) => (
+        <li>
+          <a class="cnav__item" class:list={{ 'is-active': c.id === active }} href={categoryUrl(c)} aria-current={c.id === active ? 'page' : undefined}>
+            <Icon name={c.icon} size={30} />
+            <span>{c.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+  <div class="cnav__help">
+    <p class="cnav__help-title">Нужна помощь в выборе?</p>
+    <p class="cnav__help-text">Позвоните нам: подскажем по моделям, тканям и срокам.</p>
+    <a class="btn btn--outline" href={site.contacts.phoneHref}>{site.contacts.phone}</a>
+  </div>
+</aside>
+
+<style>
+  /* mobile: a horizontal strip of sections */
+  .cnav__list { display: flex; gap: var(--space-2); overflow-x: auto; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); padding-bottom: var(--space-2); scroll-snap-type: x proximity; scrollbar-width: none; }
+  .cnav__list::-webkit-scrollbar { display: none; }
+  .cnav__list li { flex: none; scroll-snap-align: start; }
+  .cnav__item { display: flex; align-items: center; gap: var(--space-2); min-height: 3rem; padding: var(--space-2) var(--space-4); border: var(--border-thin) solid var(--card-border); border-radius: var(--card-radius); background: var(--card-bg); color: var(--color-text-strong); text-decoration: none; font-size: var(--text-sm); white-space: nowrap; transition: background-color var(--duration-fast), border-color var(--duration-fast); }
+  .cnav__item :global(.icon) { width: 1.5rem; height: 1.5rem; }
+  .cnav__item:hover { border-color: var(--color-border-strong); }
+  .cnav__item.is-active { background: var(--color-brand); border-color: var(--color-brand); color: var(--color-on-dark); }
+  .cnav__help { display: none; }
+
+  @media (min-width: 900px) {
+    .cnav { position: sticky; top: calc(var(--header-h-lg) + var(--space-5)); }
+    .cnav__list { flex-direction: column; overflow: visible; margin: 0; padding: 0; gap: var(--space-2); }
+    .cnav__item { height: 5rem; padding: var(--space-3) var(--space-5); gap: var(--space-4); font-size: var(--text-base); white-space: normal; line-height: var(--leading-snug); }
+    .cnav__item :global(.icon) { width: 2.4rem; height: 2.4rem; }
+    .cnav__help { display: block; margin-top: var(--space-5); padding: var(--space-5); background: var(--color-bg-alt); border: var(--border-thin) solid var(--color-border); border-radius: var(--card-radius); }
+    .cnav__help-title { font-family: var(--font-serif); font-size: var(--text-xl); line-height: var(--leading-snug); color: var(--color-text-strong); }
+    .cnav__help-text { margin-block: var(--space-3) var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); }
+    .cnav__help .btn { width: 100%; }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import CatalogTiles from '../../components/home/CatalogTiles.astro';
+import { site, url } from '../../lib/site.js';
+
+const crumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: new URL(url(''), Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: 'Каталог', item: new URL(url('catalog/'), Astro.site).href },
+  ],
+};
+---
+<Base
+  title={`Каталог мягкой мебели — ${site.seo.titleSuffix}`}
+  description="Каталог мебельной фабрики «ПРОУЮТ»: прямые и угловые диваны-кровати, модульные системы и кресла собственного производства. Цены от производителя."
+  jsonLd={[crumbs]}
+>
+  <section class="section">
+    <div class="container">
+      <div class="section__head">
+        <h1>Каталог мебели</h1>
+        <p>Мягкая мебель собственного производства: диваны, угловые диваны, модульные системы и кресла.</p>
+      </div>
+      <CatalogTiles />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .section__head h1 { font-size: var(--text-3xl); }
+</style>
