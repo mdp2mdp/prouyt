@@ -1,0 +1,56 @@
+---
+import { site, menu, isTodo, url } from '../lib/site.js';
+import manifest from '../data/image-manifest.json';
+const { w, h } = manifest.logo;
+const seller = site.seller;
+const sellerLine = [seller.name, !isTodo(seller.inn) && `ИНН ${seller.inn}`, seller.address].filter((v) => v && !isTodo(v));
+const showSeller = !isTodo(seller.name);
+const social = site.social.enabled ? site.social.links : [];
+---
+<footer class="site-footer on-dark">
+  <div class="container">
+    <div class="site-footer__grid">
+      <a class="logo" href={url('')} aria-label="ПРОУЮТ — на главную">
+        <img src={url('img/brand/logo-beige-320.png')} srcset={`${url('img/brand/logo-beige-320.png')} 320w, ${url('img/brand/logo-beige-640.png')} 640w`} sizes="160px" width={w} height={h} alt="ПРОУЮТ — мебельная фабрика" loading="lazy" decoding="async" />
+      </a>
+      <nav aria-label="Меню в подвале">
+        <ul class="site-footer__nav">
+          {menu.map((m) => <li><a href={m.href}>{m.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="site-footer__contacts">
+        <a href={site.contacts.phoneHref}>{site.contacts.phone}</a>
+        <a href={`mailto:${site.contacts.email}`}>{site.contacts.email}</a>
+        <p>{site.contacts.addressShort}</p>
+        {social.length > 0 && (
+          <ul class="site-footer__social">
+            {social.map((s) => <li><a href={s.href} rel="noopener noreferrer" target="_blank">{s.label}</a></li>)}
+          </ul>
+        )}
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <p>{site.legal.disclaimer}</p>
+      {showSeller && <p>{sellerLine.join(', ')}</p>}
+      <p>© <span data-year>{new Date().getFullYear()}</span> {site.brand.name}. Все права защищены.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--color-dark-bg); color: var(--color-on-dark); padding-block: var(--space-8) var(--space-6); }
+  .site-footer__grid { display: grid; gap: var(--space-6); padding-bottom: var(--space-6); border-bottom: var(--border-thin) solid var(--color-dark-border); }
+  .logo img { height: 3.25rem; width: auto; }
+  .site-footer__nav { display: grid; gap: var(--space-1); }
+  .site-footer a { text-decoration: none; }
+  .site-footer__nav a { display: inline-block; padding-block: var(--space-2); color: var(--color-on-dark); }
+  .site-footer a:hover { color: var(--color-accent); }
+  .site-footer__contacts { display: grid; gap: var(--space-2); justify-items: start; color: var(--color-on-dark); }
+  .site-footer__contacts a { padding-block: var(--space-1); }
+  .site-footer__contacts p { color: var(--color-on-dark-muted); font-size: var(--text-sm); }
+  .site-footer__social { display: flex; gap: var(--space-4); }
+  .site-footer__legal { display: grid; gap: var(--space-3); padding-top: var(--space-5); color: var(--color-on-dark-muted); font-size: var(--text-xs); line-height: var(--leading-normal); max-width: 60rem; }
+  @media (min-width: 900px) {
+    .site-footer__grid { grid-template-columns: 1.2fr 1fr 1fr; align-items: start; }
+  }
+</style>

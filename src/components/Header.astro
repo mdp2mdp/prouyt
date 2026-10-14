@@ -1,0 +1,90 @@
+---
+import Icon from './Icon.astro';
+import { site, menu, url } from '../lib/site.js';
+import manifest from '../data/image-manifest.json';
+const { w, h } = manifest.logo;
+---
+<header class="site-header on-dark" data-header>
+  <div class="container site-header__row">
+    <a class="logo" href={url('')} aria-label={`${site.brand.legalName} — на главную`}>
+      <img
+        src={url('img/brand/logo-beige-320.png')}
+        srcset={`${url('img/brand/logo-beige-320.png')} 320w, ${url('img/brand/logo-beige-640.png')} 640w`}
+        sizes="(min-width: 900px) 152px, 120px"
+        width={w}
+        height={h}
+        alt="ПРОУЮТ — мебельная фабрика"
+        decoding="async"
+      />
+    </a>
+
+    <nav id="site-nav" class="site-nav" aria-label="Основное меню" data-nav>
+      <ul class="site-nav__list">
+        {menu.map((m) => <li><a href={m.href}>{m.label}</a></li>)}
+      </ul>
+      <div class="site-nav__cta">
+        <a class="site-nav__phone" href={site.contacts.phoneHref}>{site.contacts.phone}</a>
+        <a class="btn btn--sand" href={site.contacts.phoneHref}>Позвонить</a>
+      </div>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="header-phone" href={site.contacts.phoneHref}>{site.contacts.phone}</a>
+      <a class="btn btn--outline header-call" href={site.contacts.phoneHref}>Позвонить</a>
+      <a class="icon-btn header-call-icon" href={site.contacts.phoneHref} aria-label={`Позвонить ${site.contacts.phone}`}>
+        <Icon name="phone" size={22} />
+      </a>
+      <button class="icon-btn burger" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Открыть меню" data-burger>
+        <Icon name="menu" size={24} class="burger__open" />
+        <Icon name="close" size={24} class="burger__close" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: var(--z-header); background: var(--color-dark-bg); color: var(--color-on-dark); border-bottom: var(--border-thin) solid rgb(242 233 205 / 0.08); }
+  .site-header__row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-height: var(--header-h); }
+  .logo { display: block; flex: none; }
+  .logo img { height: 2.75rem; width: auto; }
+  .site-header__actions { display: flex; align-items: center; gap: var(--space-3); }
+  .header-phone, .header-call { display: none; }
+  .icon-btn { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: var(--radius-round); border: var(--border-thin) solid rgb(242 233 205 / 0.35); background: transparent; color: var(--color-on-dark); cursor: pointer; text-decoration: none; transition: border-color var(--duration-fast), background-color var(--duration-fast); }
+  .icon-btn:hover { border-color: var(--color-accent); background: rgb(242 233 205 / 0.08); }
+  .burger :global(.burger__close) { display: none; }
+  .burger[aria-expanded='true'] :global(.burger__open) { display: none; }
+  .burger[aria-expanded='true'] :global(.burger__close) { display: block; }
+
+  /* mobile: collapsible panel under the header (hidden only when JS is available) */
+  .site-nav { background: var(--color-dark-bg); }
+  .site-nav__list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+  .site-nav a { text-decoration: none; }
+  .site-nav__list a { display: block; padding-block: var(--space-2); color: var(--color-on-dark); font-size: var(--text-sm); }
+  .site-nav__list a:hover { color: var(--color-accent); }
+  .site-nav__cta { display: none; }
+  :global(.js) .site-nav { position: absolute; inset: 100% 0 auto 0; z-index: var(--z-menu); padding: var(--space-4) var(--gutter) var(--space-6); border-bottom: var(--border-thin) solid rgb(242 233 205 / 0.12); box-shadow: var(--shadow-lg); visibility: hidden; opacity: 0; transform: translateY(-8px); transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease), visibility 0s linear var(--duration); }
+  :global(.js) .site-nav.is-open { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+  :global(.js) .site-nav__list { flex-direction: column; gap: 0; }
+  :global(.js) .site-nav__list a { padding-block: var(--space-3); font-size: var(--text-lg); font-family: var(--font-serif); border-bottom: var(--border-thin) solid rgb(242 233 205 / 0.1); }
+  :global(.js) .site-nav__cta { display: grid; gap: var(--space-4); margin-top: var(--space-5); }
+  .site-nav__phone { color: var(--color-on-dark); font-size: var(--text-xl); }
+
+  @media (min-width: 640px) {
+    .logo img { height: 3rem; }
+  }
+  @media (min-width: 900px) {
+    .site-header__row { min-height: var(--header-h-lg); }
+    .logo img { height: 3.5rem; }
+    .burger, .header-call-icon { display: none; }
+    .header-phone { display: block; color: var(--color-on-dark); text-decoration: none; font-size: var(--text-base); font-weight: 500; white-space: nowrap; }
+    .header-phone:hover { color: var(--color-accent); }
+    .header-call { display: inline-flex; min-height: 2.75rem; }
+    .site-nav, :global(.js) .site-nav { position: static; visibility: visible; opacity: 1; transform: none; padding: 0; border: 0; box-shadow: none; background: transparent; flex: 1; display: flex; justify-content: center; }
+    .site-nav__list, :global(.js) .site-nav__list { flex-direction: row; gap: var(--space-6); }
+    .site-nav__list a, :global(.js) .site-nav__list a { padding-block: var(--space-2); font-family: var(--font-sans); font-size: var(--text-sm); border: 0; }
+    .site-nav__cta, :global(.js) .site-nav__cta { display: none; }
+  }
+  @media (min-width: 900px) and (max-width: 1099px) {
+    .header-phone { display: none; }
+  }
+</style>

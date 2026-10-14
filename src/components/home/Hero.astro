@@ -1,0 +1,44 @@
+---
+import Picture from '../Picture.astro';
+import { site, url } from '../../lib/site.js';
+---
+<section class="hero on-dark" aria-labelledby="hero-title">
+  <Picture
+    class="hero__img"
+    id="hero/hero"
+    alt="Гостиная с угловым диваном тёмно-зелёного цвета"
+    sizes="100vw"
+    priority
+    fallbackWidth={960}
+  />
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="container hero__content">
+    <h1 id="hero-title"><span>{site.brand.slogan.split(', ')[0]},</span> <span>{site.brand.slogan.split(', ').slice(1).join(', ')}</span></h1>
+    <p class="hero__lead">{site.brand.tagline}</p>
+    <div class="hero__actions">
+      <a class="btn btn--sand btn--lg" href={url('#catalog')}>Смотреть каталог</a>
+      <a class="link-underline" href={url('#about')}>О фабрике</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; isolation: isolate; display: grid; align-items: end; min-height: min(35rem, 90svh); background: var(--green-950); color: var(--color-on-dark); overflow: hidden; }
+  .hero :global(picture), .hero :global(.hero__img) { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+  .hero :global(.hero__img) { object-fit: cover; object-position: 66% 60%; }
+  .hero__shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(16 30 21 / 0.92) 0%, rgb(16 30 21 / 0.78) 34%, rgb(16 30 21 / 0.2) 62%, rgb(16 30 21 / 0.05) 100%); }
+  .hero__content { padding-block: var(--space-8) var(--space-7); }
+  .hero h1 span { display: block; }
+  .hero h1 { max-width: 15ch; font-size: var(--text-hero); color: var(--color-accent); }
+  .hero__lead { max-width: 26rem; margin-top: var(--space-4); font-size: var(--text-lg); color: var(--color-on-dark); }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-6); }
+  .hero .link-underline { color: var(--color-on-dark); }
+
+  @media (min-width: 900px) {
+    .hero { align-items: center; min-height: clamp(34rem, 46vw, 40rem); }
+    .hero__shade { background: linear-gradient(90deg, rgb(16 30 21 / 0.82) 0%, rgb(16 30 21 / 0.5) 42%, rgb(16 30 21 / 0.08) 75%); }
+    .hero__content { padding-block: var(--space-9); }
+    .hero h1 { max-width: 20ch; }
+    .hero :global(.hero__img) { object-position: 50% 50%; }
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+import { imageInfo } from '../lib/images.js';
+const {
+  id,
+  alt = '',
+  sizes = '100vw',
+  loading = 'lazy',
+  priority = false,
+  fallbackWidth = 960,
+  class: cls = '',
+  style,
+} = Astro.props;
+const img = imageInfo(id);
+---
+<picture>
+  <source type="image/avif" srcset={img.srcset('avif')} sizes={sizes} />
+  <source type="image/webp" srcset={img.srcset('webp')} sizes={sizes} />
+  <img
+    class={cls}
+    src={img.fallback(fallbackWidth)}
+    width={img.w}
+    height={img.h}
+    alt={alt}
+    sizes={sizes}
+    loading={priority ? 'eager' : loading}
+    fetchpriority={priority ? 'high' : undefined}
+    decoding={priority ? 'sync' : 'async'}
+    style={style}
+  />
+</picture>

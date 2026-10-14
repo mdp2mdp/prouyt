@@ -1,0 +1,34 @@
+---
+import Icon from '../Icon.astro';
+const { items, label } = Astro.props;
+---
+<ul class="features" aria-label={label}>
+  {items.map((it, i) => (
+    <li class="features__item" data-reveal style={`--reveal-i:${i}`}>
+      <span class="features__icon"><Icon name={it.icon} size={26} /></span>
+      <div>
+        <h3 class="features__title">{it.title}</h3>
+        <p class="features__text">{it.text}</p>
+      </div>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .features { display: grid; }
+  .features__item { display: flex; align-items: center; gap: var(--space-4); padding-block: var(--space-5); border-bottom: var(--border-thin) solid var(--color-dark-border); }
+  .features__item:last-child { border-bottom: 0; }
+  .features__icon { display: inline-grid; place-items: center; flex: none; width: var(--icon-circle); height: var(--icon-circle); border: var(--border-thin) solid rgb(242 233 205 / 0.4); border-radius: var(--radius-round); color: var(--color-accent); }
+  .features__title { font-family: var(--font-sans); font-size: var(--text-base); font-weight: 500; color: var(--color-on-dark); line-height: var(--leading-snug); }
+  .features__text { margin-top: var(--space-1); font-size: var(--text-sm); color: var(--color-on-dark-muted); line-height: var(--leading-snug); }
+
+  @media (min-width: 640px) and (max-width: 1099px) {
+    .features { grid-template-columns: 1fr 1fr; column-gap: var(--space-6); }
+    .features__item:nth-last-child(2) { border-bottom: 0; }
+  }
+  @media (min-width: 1100px) {
+    .features { grid-template-columns: repeat(4, 1fr); }
+    .features__item { padding-block: var(--space-2); padding-inline: var(--space-5); border-bottom: 0; border-left: var(--border-thin) solid var(--color-dark-border); align-items: flex-start; }
+    .features__item:first-child { border-left: 0; padding-left: 0; }
+  }
+</style>

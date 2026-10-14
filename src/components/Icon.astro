@@ -1,0 +1,40 @@
+---
+// One consistent set of thin-stroke line icons (24×24, currentColor).
+const { name, size = 24, class: cls = '' } = Astro.props;
+const paths = {
+  sofa: '<path d="M5 11V8.5A2.5 2.5 0 0 1 7.5 6h9A2.5 2.5 0 0 1 19 8.5V11"/><path d="M3 14a2 2 0 0 1 4 0v1.5h10V14a2 2 0 0 1 4 0v4H3z"/><path d="M6 18v1.5M18 18v1.5"/>',
+  corner: '<path d="M3 9.5h11V15H3z"/><path d="M14 9.5h7V18h-7z"/><path d="M5 15v3M17 18v1"/><path d="M3 9.5V7.5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 15 7.5v2"/>',
+  modules: '<path d="M3.5 13h7v6.5h-7zM13.5 13h7v6.5h-7zM8.5 4.5h7V11h-7z"/>',
+  armchair: '<path d="M7 11V7.5A2.5 2.5 0 0 1 9.5 5h5A2.5 2.5 0 0 1 17 7.5V11"/><path d="M4 13a2 2 0 0 1 4 0v2.5h8V13a2 2 0 0 1 4 0v4.5H4z"/><path d="M7 17.5V20M17 17.5V20"/>',
+  pillow: '<path d="M5 6.5c4.2 1.4 9.8 1.4 14 0 1 3.7 1 7.3 0 11-4.2-1.4-9.8-1.4-14 0-1-3.7-1-7.3 0-11z"/>',
+  leaf: '<path d="M5 19C5 10.5 10.5 5 19 5c0 8.5-5.5 14-14 14z"/><path d="M5 19l8-8"/>',
+  grid: '<path d="M4 4h6.5v6.5H4zM13.5 4H20v6.5h-6.5zM4 13.5h6.5V20H4zM13.5 13.5H20V20h-6.5z"/>',
+  swatch: '<path d="M12 3.5c3.2 4 6 6.6 6 10a6 6 0 0 1-12 0c0-3.4 2.8-6 6-10z"/><path d="M9 14.5a3 3 0 0 0 3 3"/>',
+  calendar: '<path d="M4 6h16v14H4z"/><path d="M4 10.5h16M8 3.5v4M16 3.5v4"/>',
+  truck: '<path d="M2.5 6.5h11v9.500h-11z"/><path d="M13.5 10h4l3 3.2V16h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
+  phone: '<path d="M5 4h4l1.8 4.7-2.4 1.5a11 11 0 0 0 5.4 5.4l1.5-2.4L20 15v4a1.5 1.5 0 0 1-1.5 1.5A16 16 0 0 1 3.5 5.5 1.5 1.5 0 0 1 5 4z"/>',
+  mail: '<path d="M3.5 6h17v12h-17z"/><path d="M3.5 7l8.5 6.5L20.500 7"/>',
+  pin: '<path d="M12 21s7-5.8 7-11.2a7 7 0 1 0-14 0C5 15.200 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.5"/>',
+  arrow: '<path d="M4.5 12h15M13.5 6l6 6-6 6"/>',
+  'arrow-left': '<path d="M19.5 12h-15M10.5 6l-6 6 6 6"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  chevron: '<path d="M6 9l6 6 6-6"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.800v.2"/>',
+  box: '<path d="M4 8l8-4 8 4v9l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v9"/>',
+  ruler: '<path d="M3 15.5L15.5 3 21 8.5 8.5 21z"/><path d="M7 11.5l2.5 2.5M10 8.5l1.5 1.5M13 5.5L15 7.5"/>',
+};
+---
+<svg
+  class={`icon ${cls}`.trim()}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={paths[name]}
+/>

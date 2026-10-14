@@ -1,18 +1,51 @@
 ---
-import site from '../data/site.json';
-import products from '../data/products.json';
-const base = import.meta.env.BASE_URL;
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import FeatureList from '../components/home/FeatureList.astro';
+import CatalogTiles from '../components/home/CatalogTiles.astro';
+import About from '../components/home/About.astro';
+import Contacts from '../components/home/Contacts.astro';
+import { site } from '../lib/site.js';
+
+const title = `${site.brand.legalName} — ${site.brand.tagline.toLowerCase()}`;
 ---
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{site.brand.legalName}</title>
-    <meta name="description" content={site.seo.defaultDescription} />
-  </head>
-  <body>
-    <h1>{site.brand.slogan}</h1>
-    <p>Каркас сайта (этап 1). Моделей в данных: {products.length}. База: {base}</p>
-  </body>
-</html>
+<Base title={title} description={site.seo.defaultDescription}>
+  <Hero />
+
+  <section class="section section--dark features-band" aria-label="Преимущества" style="padding-block: var(--space-6)">
+    <div class="container">
+      <FeatureList items={site.home.advantages} label="Преимущества фабрики" />
+    </div>
+  </section>
+
+  <section id="catalog" class="section" aria-labelledby="catalog-title">
+    <div class="container">
+      <div class="section__head" data-reveal>
+        <h2 id="catalog-title">Каталог мебели</h2>
+        <p>Мягкая мебель собственного производства: диваны, угловые диваны, модульные системы и кресла.</p>
+      </div>
+      <CatalogTiles />
+    </div>
+  </section>
+
+  <section id="about" class="section section--alt" aria-label="О фабрике">
+    <div class="container">
+      <About />
+    </div>
+  </section>
+
+  <section id="why" class="section section--dark" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section__head" data-reveal>
+        <h2 id="why-title">Почему выбирают нас</h2>
+      </div>
+      <FeatureList items={site.home.why} label="Почему выбирают нас" />
+    </div>
+  </section>
+
+  <section id="contacts" class="section" aria-label="Контакты">
+    <div class="container">
+      <Contacts />
+    </div>
+  </section>
+</Base>

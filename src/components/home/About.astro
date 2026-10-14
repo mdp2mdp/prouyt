@@ -1,0 +1,29 @@
+---
+import Picture from '../Picture.astro';
+import about from '../../data/about.generated.json';
+// Text is taken from «1. О КОМПАНИИ» of the client document (proofread only).
+// The note about future plans ("планируем расширить модельный ряд") is internal and is not shown.
+const choice = about.note.find((n) => n.startsWith('При заказе'));
+---
+<div class="about">
+  <div class="about__text" data-reveal>
+    <p class="eyebrow">О фабрике</p>
+    <h2 class="about__lead">{about.lead}</h2>
+    {about.paragraphs.map((p) => <p class="about__p">{p}</p>)}
+    {choice && <p class="about__p">{choice}</p>}
+  </div>
+  <div class="about__photo photo" data-reveal style="--reveal-i:1">
+    <Picture id="nikol/interior-1" alt="Диван «Николь» тёмно-зелёного цвета в интерьере гостиной" sizes="(min-width: 900px) 560px, 100vw" />
+  </div>
+</div>
+
+<style>
+  .about { display: grid; gap: var(--space-6); align-items: center; }
+  .about__lead { font-size: var(--text-2xl); line-height: var(--leading-snug); }
+  .about__p { margin-top: var(--space-4); max-width: 38rem; }
+  .about__lead + .about__p { margin-top: var(--space-5); }
+  .about__photo { --photo-ratio: 4 / 3; border-radius: var(--radius-lg); }
+  @media (min-width: 900px) {
+    .about { grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+  }
+</style>

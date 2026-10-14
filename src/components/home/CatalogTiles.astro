@@ -1,0 +1,57 @@
+---
+import Picture from '../Picture.astro';
+import Icon from '../Icon.astro';
+import { enabledCategories, products, url } from '../../lib/site.js';
+
+// Tile photo = cover of a chosen model (kept in one place; change the slug to swap the picture)
+const tileModel = { straight: 'kardinal-2', corner: 'nikol-uglovoy', modular: 'estetik', armchairs: null };
+const tiles = enabledCategories.map((c) => {
+  const slug = tileModel[c.id];
+  const p = slug ? products.find((x) => x.slug === slug) : products.find((x) => x.category === c.id && x.images.cover);
+  return { ...c, image: p?.images.cover?.id ?? null, imageAlt: p ? `${c.short}: ${p.name}` : '' };
+});
+---
+<ul class="tiles">
+  {tiles.map((t, i) => (
+    <li class="tiles__li" data-reveal style={`--reveal-i:${i}`}>
+      <a class="tile" href={url(`catalog/${t.slug}/`)}>
+        <span class="tile__photo photo" class:list={{ 'photo--placeholder': !t.image }}>
+          {t.image
+            ? <Picture id={t.image} alt={t.imageAlt} sizes="(min-width: 900px) 280px, 60vw" fallbackWidth={960} />
+            : <span><Icon name={t.icon} size={32} /><span>Фото скоро</span></span>}
+        </span>
+        <span class="tile__label">
+          <span class="tile__title">{t.title}</span>
+          <Icon name="arrow" size={22} class="tile__arrow" />
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .tiles { display: grid; gap: var(--space-3); }
+  .tile { display: grid; grid-template-columns: 1.5fr 1fr; min-height: 7.5rem; background: var(--card-bg); border: var(--border-thin) solid var(--card-border); border-radius: var(--card-radius); overflow: hidden; text-decoration: none; color: var(--color-text-strong); transition: box-shadow var(--duration) var(--ease), transform var(--duration) var(--ease), border-color var(--duration) var(--ease); }
+  .tile:hover { box-shadow: var(--card-shadow-hover); border-color: var(--color-border-strong); }
+  .tile__photo { aspect-ratio: auto; min-height: 7.5rem; height: 100%; }
+  .tile__photo :global(img) { transition: transform var(--duration-slow) var(--ease); }
+  .tile:hover .tile__photo :global(img) { transform: scale(1.04); }
+  .tile__label { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-3); padding: var(--space-4); }
+  .tile__title { font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-snug); }
+  .tile :global(.tile__arrow) { align-self: flex-end; transition: transform var(--duration) var(--ease); }
+  .tile:hover :global(.tile__arrow) { transform: translateX(4px); }
+
+  @media (min-width: 640px) {
+    .tiles { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    .tile { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: 100%; }
+    .tile__photo { aspect-ratio: var(--photo-ratio); height: auto; }
+    .tile__label { flex-direction: row; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-4); }
+    .tile :global(.tile__arrow) { align-self: center; }
+  }
+  @media (min-width: 900px) {
+    .tiles { grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tile:hover .tile__photo :global(img), .tile:hover :global(.tile__arrow) { transform: none; }
+  }
+</style>
