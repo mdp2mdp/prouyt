@@ -1,0 +1,18 @@
+{
+ "page": "/catalog/straight/trio/",
+ "perf": 99,
+ "a11y": 97,
+ "bp": 100,
+ "seo": 100,
+ "lcp": "1.5 s",
+ "cls": "0",
+ "tbt": "150 ms",
+ "issues": [
+  "max-potential-fid(0.82)",
+  "list(0)",
+  "cache-insight(0)",
+  "image-delivery-insight(0.5)",
+  "network-dependency-tree-insight(0)",
+  "render-blocking-insight(0.5)"
+ ]
+}

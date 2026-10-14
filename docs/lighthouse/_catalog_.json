@@ -1,0 +1,17 @@
+{
+ "page": "/catalog/",
+ "perf": 100,
+ "a11y": 100,
+ "bp": 100,
+ "seo": 100,
+ "lcp": "1.7 s",
+ "cls": "0",
+ "tbt": "0 ms",
+ "issues": [
+  "cache-insight(0)",
+  "image-delivery-insight(0)",
+  "lcp-discovery-insight(0)",
+  "network-dependency-tree-insight(0)",
+  "render-blocking-insight(0.5)"
+ ]
+}

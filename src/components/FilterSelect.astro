@@ -7,7 +7,7 @@ const { label = 'Фильтры:', title, allLabel, options } = Astro.props; // 
 <div class="filter" data-filter hidden>
   <span class="filter__label" id="filter-label">{label}</span>
   <div class="dd" data-dd>
-    <button class="dd__btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="filter-label dd-value" data-dd-btn>
+    <button class="dd__btn" type="button" aria-haspopup="listbox" aria-expanded="false" data-dd-btn>
       <span class="dd__title">{title}:</span>
       <span class="dd__value" id="dd-value" data-dd-value>{allLabel}</span>
       <Icon name="chevron" size={18} class="dd__chev" />
@@ -31,6 +31,8 @@ const { label = 'Фильтры:', title, allLabel, options } = Astro.props; // 
 <style>
   .filter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block: var(--space-5); }
   .filter[hidden] { display: none; }
+  /* with JS the space is reserved from the first paint (no layout shift when the filter is revealed) */
+  :global(.js) .filter[hidden] { display: flex; visibility: hidden; }
   .filter__label { font-size: var(--text-sm); color: var(--color-text-muted); }
   .filter__status { font-size: var(--text-sm); color: var(--color-text-muted); }
 

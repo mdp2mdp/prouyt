@@ -17,9 +17,9 @@ const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN 
 ) : (
   <div class="gallery" data-gallery>
     <div class="gallery__main">
-      <ul class="gallery__track" tabindex="0" aria-label={`Фотографии: ${p.name}`} data-track>
+      <div class="gallery__track" tabindex="0" role="group" aria-roledescription="карусель" aria-label={`Фотографии: ${p.name}`} data-track>
         {imgs.map((g, i) => (
-          <li class="gallery__slide photo" role="group" aria-roledescription="слайд" aria-label={`${i + 1} из ${imgs.length}`}>
+          <div class="gallery__slide photo" role="group" aria-roledescription="слайд" aria-label={`${i + 1} из ${imgs.length}`}>
             <Picture
               id={g.id}
               alt={alts[i]}
@@ -27,9 +27,9 @@ const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN 
               priority={i === 0}
               fallbackWidth={1600}
             />
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
       {many && (
         <>
           <button class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Предыдущее фото" data-prev><Icon name="arrow-left" size={22} /></button>
