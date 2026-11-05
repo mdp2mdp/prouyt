@@ -72,7 +72,8 @@ const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN 
   .gallery__thumb { display: block; width: 5.5rem; padding: 0; border: 2px solid transparent; border-radius: var(--radius-md); background: none; cursor: pointer; overflow: hidden; opacity: 0.75; transition: opacity var(--duration-fast), border-color var(--duration-fast); }
   .gallery__thumb:hover { opacity: 1; }
   .gallery__thumb[aria-current='true'] { border-color: var(--color-brand); opacity: 1; }
-  .gallery__thumb .photo { border-radius: calc(var(--radius-md) - 2px); }
+  /* the frame is a <span>: it must be a block for the fixed 3:2 ratio to apply, otherwise each thumbnail takes its photo's own proportions */
+  .gallery__thumb .photo { display: block; border-radius: calc(var(--radius-md) - 2px); }
   @media (min-width: 900px) {
     .gallery__thumb { width: 7rem; }
   }
