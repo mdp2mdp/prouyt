@@ -176,6 +176,9 @@
       "photoDir": "олимп",
       "excludePhotos": [
         "оскар п студ .png"
+      ],
+      "onlyFiles": [
+        "олимп студ правильный.JPG"
       ]
     },
     {
@@ -342,7 +345,7 @@
           "file": "оскар п студ .png"
         }
       ],
-      "cover": "studio-1"
+      "coverFile": "оскар п студ 2.jfif"
     },
     {
       "slug": "estetik",
@@ -385,7 +388,8 @@
       "xlsx": {
         "main": 56
       },
-      "photoDir": null
+      "photoDir": "комфорт",
+      "coverFile": "комфорт студ 2.JPG"
     },
     {
       "slug": "komfort-layt",
@@ -398,7 +402,8 @@
       "xlsx": {
         "main": 58
       },
-      "photoDir": null
+      "photoDir": "комфорт лайт",
+      "coverFile": "комфорт лайт студ 2.JPG"
     }
   ]
 }

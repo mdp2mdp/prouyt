@@ -5,7 +5,8 @@
       "kind": "studio",
       "src": "твигги н/твигги н студ 2.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -26,7 +27,8 @@
       "kind": "studio",
       "src": "твигги н/твигги н студ.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     }
   ],
   "florentsiya": [
@@ -35,7 +37,8 @@
       "kind": "studio",
       "src": "флоренция/флоренция студ.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -56,7 +59,8 @@
       "kind": "studio",
       "src": "флоренция/флоренция студ 2.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     }
   ],
   "big-ben": [
@@ -65,7 +69,8 @@
       "kind": "studio",
       "src": "биг-бен/биг бен студ 3.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -86,14 +91,16 @@
       "kind": "studio",
       "src": "биг-бен/биг бен студ 2.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "studio-3",
       "kind": "studio",
       "src": "биг-бен/биг бен студ.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     }
   ],
   "charli": [
@@ -109,7 +116,8 @@
       "kind": "studio",
       "src": "чарли/чарли студ 2.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     }
   ],
   "gretta": [
@@ -118,7 +126,8 @@
       "kind": "studio",
       "src": "гретта/гретта студ.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -139,14 +148,16 @@
       "kind": "studio",
       "src": "гретта/гретта студ 3.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "studio-3",
       "kind": "studio",
       "src": "гретта/гретта студ 2.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     }
   ],
   "greys": [
@@ -155,7 +166,8 @@
       "kind": "studio",
       "src": "грейс/грейс студ.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -183,14 +195,16 @@
       "kind": "studio",
       "src": "грейс/грейс студ 3.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "studio-3",
       "kind": "studio",
       "src": "грейс/грейс студ 2.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     }
   ],
   "kardinal-2": [
@@ -199,7 +213,8 @@
       "kind": "studio",
       "src": "кардинал 2/кардинал-2 студ.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -220,14 +235,16 @@
       "kind": "studio",
       "src": "кардинал 2/кардинал-2 студ 3.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "studio-3",
       "kind": "studio",
       "src": "кардинал 2/кардинал-2 студ 2.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     }
   ],
   "kardinal-3": [
@@ -301,7 +318,8 @@
       "kind": "studio",
       "src": "кельн прямой/кельн студ 2.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     }
   ],
   "vegas-3-rich": [
@@ -310,7 +328,8 @@
       "kind": "studio",
       "src": "вегас 3 рич/вегас 3 рич студ 2.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -331,7 +350,8 @@
       "kind": "studio",
       "src": "вегас 3 рич/вегас 3 рич студ.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     }
   ],
   "oskar": [
@@ -419,28 +439,7 @@
     {
       "id": "studio-1",
       "kind": "studio",
-      "src": "олимп/олимп студ.png",
-      "w": 2528,
-      "h": 1696
-    },
-    {
-      "id": "interior-1",
-      "kind": "interior",
-      "src": "олимп/олимп 2.PNG",
-      "w": 1678,
-      "h": 937
-    },
-    {
-      "id": "interior-2",
-      "kind": "interior",
-      "src": "олимп/олимп.JPEG",
-      "w": 1376,
-      "h": 768
-    },
-    {
-      "id": "studio-2",
-      "kind": "studio",
-      "src": "олимп/олимп студ 2.png",
+      "src": "олимп/олимп студ правильный.JPG",
       "w": 2528,
       "h": 1696
     }
@@ -488,7 +487,8 @@
       "kind": "studio",
       "src": "николь прямая/николь прямая студ.png",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -525,14 +525,16 @@
       "kind": "studio",
       "src": "турин/турин студ.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     },
     {
       "id": "studio-3",
       "kind": "studio",
       "src": "турин/турин студ 2.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     }
   ],
   "keln-uglovoy": [
@@ -541,7 +543,8 @@
       "kind": "studio",
       "src": "кельн угол/кельн угол студ.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -562,7 +565,8 @@
       "kind": "studio",
       "src": "кельн угол/кельн угол студ 2.JPG",
       "w": 1264,
-      "h": 848
+      "h": 848,
+      "enhance": true
     }
   ],
   "neapol": [
@@ -622,7 +626,8 @@
       "kind": "studio",
       "src": "оскар/оскар угол студ 3.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     }
   ],
   "trio-uglovoy": [
@@ -705,7 +710,8 @@
       "kind": "studio",
       "src": "биг бен угол/биг бен угловой студ.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -742,7 +748,8 @@
       "kind": "studio",
       "src": "николь угол/николь студ 2.jfif",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     }
   ],
   "unika": [
@@ -777,11 +784,12 @@
   ],
   "oskar-p": [
     {
-      "id": "studio-1",
+      "id": "studio-3",
       "kind": "studio",
-      "src": "оскар п/оскар п студ 3.png",
-      "w": 2528,
-      "h": 1696
+      "src": "оскар п/оскар п студ 2.jfif",
+      "w": 1024,
+      "h": 687,
+      "enhance": true
     },
     {
       "id": "interior-1",
@@ -805,18 +813,18 @@
       "h": 941
     },
     {
+      "id": "studio-1",
+      "kind": "studio",
+      "src": "оскар п/оскар п студ 3.png",
+      "w": 2528,
+      "h": 1696
+    },
+    {
       "id": "studio-2",
       "kind": "studio",
       "src": "олимп/оскар п студ .png",
       "w": 2528,
       "h": 1696
-    },
-    {
-      "id": "studio-3",
-      "kind": "studio",
-      "src": "оскар п/оскар п студ 2.jfif",
-      "w": 1024,
-      "h": 687
     }
   ],
   "estetik": [
@@ -839,9 +847,52 @@
       "kind": "studio",
       "src": "эстетик/эстетик студ .png",
       "w": 1024,
-      "h": 687
+      "h": 687,
+      "enhance": true
     }
   ],
-  "komfort": [],
-  "komfort-layt": []
+  "komfort": [
+    {
+      "id": "studio-1",
+      "kind": "studio",
+      "src": "комфорт/комфорт студ 2.JPG",
+      "w": 1264,
+      "h": 848,
+      "enhance": true
+    },
+    {
+      "id": "studio-2",
+      "kind": "studio",
+      "src": "комфорт/комфорт студ 1.JPG",
+      "w": 1264,
+      "h": 848,
+      "enhance": true
+    },
+    {
+      "id": "studio-3",
+      "kind": "studio",
+      "src": "комфорт/комфорт студ 3.JPG",
+      "w": 1264,
+      "h": 848,
+      "enhance": true
+    }
+  ],
+  "komfort-layt": [
+    {
+      "id": "studio-2",
+      "kind": "studio",
+      "src": "комфорт лайт/комфорт лайт студ 2.JPG",
+      "w": 1264,
+      "h": 848,
+      "enhance": true
+    },
+    {
+      "id": "studio-1",
+      "kind": "studio",
+      "src": "комфорт лайт/комфорт лайт студ 1.JPG",
+      "w": 1264,
+      "h": 848,
+      "enhance": true
+    }
+  ]
 }

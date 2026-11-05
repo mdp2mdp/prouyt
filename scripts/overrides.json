@@ -55,6 +55,70 @@
       "before": "Спальное место",
       "source": "xlsx",
       "reason": "docx has no overall height"
+    },
+    {
+      "slug": "unika",
+      "op": "setSpec",
+      "label": "Комплектация",
+      "value": "9 декоративных подушек",
+      "reason": "client, round 2"
+    },
+    {
+      "slug": "unika",
+      "op": "addSpec",
+      "label": "Общая длина модификации «Уника У» (с узкими подлокотниками)",
+      "value": "2250 мм",
+      "after": "Общая длина",
+      "source": "customer",
+      "reason": "client slide with modifications"
+    },
+    {
+      "slug": "keln",
+      "op": "addSpec",
+      "label": "Длина модификации «Кельн У» (с узкими подлокотниками)",
+      "value": "2200 мм",
+      "after": "Габариты",
+      "source": "customer",
+      "reason": "client slide with modifications"
+    },
+    {
+      "slug": "keln-uglovoy",
+      "op": "addSpec",
+      "label": "Длина модификации «Кельн У» (с узкими подлокотниками)",
+      "value": "2200 мм",
+      "after": "Габариты",
+      "source": "customer",
+      "reason": "client slide with modifications"
+    }
+  ],
+  "descOps": [
+    {
+      "slug": "gretta",
+      "paragraph": 0,
+      "from": "В сложенном виде он может заменить односпальное место для отдыха, а при необходимости превращается",
+      "to": "При необходимости он превращается",
+      "reason": "client, round 2: remove the single-bed claim"
+    },
+    {
+      "slug": "gretta",
+      "paragraph": 1,
+      "from": "сразу два вместительных ящика",
+      "to": "два ящика",
+      "reason": "client, round 2: words «сразу» and «вместительных» underlined for removal"
+    },
+    {
+      "slug": "greys",
+      "paragraph": 0,
+      "from": "Днем его можно использовать как полноценное односпальное место для отдыха, а вечером легко превратить",
+      "to": "Днём это диван для отдыха, а вечером он легко превращается",
+      "reason": "client, round 2: remove the single-bed claim"
+    },
+    {
+      "slug": "unika",
+      "paragraph": 0,
+      "from": "Восемь декоративных подушек",
+      "to": "Девять декоративных подушек",
+      "reason": "client, round 2: 9 pillows instead of 8"
     }
   ]
 }

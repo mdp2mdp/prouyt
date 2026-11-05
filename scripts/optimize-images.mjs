@@ -50,6 +50,11 @@ async function emit(input, dir, name, { avif = true } = {}) {
       written++;
     }
   }
+  // drop files from older runs (e.g. a different set of widths for the same image id)
+  for (const file of fs.readdirSync(dir)) {
+    const m = file.match(/^(.*)-(d+).(webp|avif)$/);
+    if (m && m[1] === name && !widths.includes(Number(m[2]))) fs.rmSync(path.join(dir, file));
+  }
   return { w, h, widths };
 }
 
@@ -85,11 +90,30 @@ async function retouch(src, r) {
   return outFile;
 }
 
+/* ---- enhancement of low-resolution studio shots (< 1600 px): 2x upscale, JPEG-noise reduction, gentle sharpening.
+   There is no extra detail to recover, but the result is clean and holds up on large screens. Output goes to _source/enhanced. */
+async function enhance(src, tag) {
+  const outFile = path.join(SRC, 'enhanced', tag + '.jpg');
+  const inFile = path.join(PHOTOS, src);
+  if (!FORCE && fs.existsSync(outFile) && fs.statSync(outFile).mtimeMs > fs.statSync(inFile).mtimeMs) return outFile;
+  const meta = await sharp(inFile).metadata();
+  fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  await sharp(inFile)
+    .rotate()
+    .removeAlpha()
+    .median(3)
+    .resize({ width: meta.width * 2, kernel: 'lanczos3' })
+    .sharpen({ sigma: 1.2, m1: 0.7, m2: 1.4 })
+    .jpeg({ quality: 95, chromaSubsampling: '4:4:4', mozjpeg: true })
+    .toFile(outFile);
+  return outFile;
+}
+
 /* ---- catalog photos */
 const photoMap = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts', 'generated', 'photo-map.json'), 'utf8'));
 for (const [slug, list] of Object.entries(photoMap)) {
   for (const p of list) {
-    const input = RETOUCH[p.src] ? await retouch(p.src, RETOUCH[p.src]) : path.join(PHOTOS, p.src);
+    const input = RETOUCH[p.src] ? await retouch(p.src, RETOUCH[p.src]) : p.enhance ? await enhance(p.src, `${slug}__${p.id}`) : path.join(PHOTOS, p.src);
     const info = await emit(input, path.join(OUT, slug), p.id);
     manifest[`${slug}/${p.id}`] = info;
   }

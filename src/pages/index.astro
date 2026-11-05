@@ -25,10 +25,13 @@ const org = {
     addressCountry: 'RU',
     addressRegion: 'Московская область',
     addressLocality: 'Фрязино',
-    streetAddress: 'ул. Восточная Заводская Промышленная, д. 22, стр. 6',
+    postalCode: '141190',
+    streetAddress: 'тер. Восточная Заводская Промышленная, д. 22, стр. 6',
   },
   contactPoint: { '@type': 'ContactPoint', contactType: 'sales', telephone: '+7-964-510-67-47', email: site.contacts.email, availableLanguage: 'ru' },
   areaServed: 'RU',
+  openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' },
+  sameAs: site.social.enabled ? site.social.links.map((l) => l.href) : undefined,
 };
 const title = `${site.brand.legalName} — ${site.brand.tagline.toLowerCase()}`;
 ---

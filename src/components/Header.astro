@@ -25,10 +25,16 @@ const { w, h } = manifest.logo;
       <div class="site-nav__cta">
         <a class="site-nav__phone" href={site.contacts.phoneHref}>{site.contacts.phone}</a>
         <a class="btn btn--sand" href={site.contacts.phoneHref}>Позвонить</a>
+        {site.contacts.max && (
+          <a class="btn btn--outline" href={site.contacts.max.href} target="_blank" rel="noopener noreferrer"><Icon name="chat" size={20} /> {site.contacts.max.label}</a>
+        )}
       </div>
     </nav>
 
     <div class="site-header__actions">
+      <button class="icon-btn search-btn" type="button" aria-label="Поиск по каталогу" aria-haspopup="dialog" aria-expanded="false" aria-controls="site-search" data-search-open>
+        <Icon name="search" size={24} />
+      </button>
       <a class="header-phone" href={site.contacts.phoneHref}>{site.contacts.phone}</a>
       <a class="btn btn--outline header-call" href={site.contacts.phoneHref}>Позвонить</a>
       <a class="icon-btn header-call-icon" href={site.contacts.phoneHref} aria-label={`Позвонить ${site.contacts.phone}`}>
@@ -49,6 +55,8 @@ const { w, h } = manifest.logo;
   .logo img { height: 2.75rem; width: auto; }
   .site-header__actions { display: flex; align-items: center; gap: var(--space-3); }
   .header-phone, .header-call { display: none; }
+  .search-btn { display: none; }
+  :global(.js) .search-btn { display: inline-grid; }
   .icon-btn { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: var(--radius-round); border: var(--border-thin) solid rgb(242 233 205 / 0.35); background: transparent; color: var(--color-on-dark); cursor: pointer; text-decoration: none; transition: border-color var(--duration-fast), background-color var(--duration-fast); }
   .icon-btn:hover { border-color: var(--color-accent); background: rgb(242 233 205 / 0.08); }
   .burger :global(.burger__close) { display: none; }

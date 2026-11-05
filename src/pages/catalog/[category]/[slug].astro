@@ -77,10 +77,18 @@ const productLd = {
       <div class="product__buy" data-reveal style="--reveal-i:1">
         <p class="product__price">{priceText(p)}</p>
         <p class="product__price-note">{site.legal.priceNote}</p>
-        <a class="btn btn--primary btn--lg product__cta" href={site.contacts.phoneHref}>
-          <Icon name="phone" size={20} /> Позвонить
-        </a>
+        <div class="product__actions">
+          <a class="btn btn--primary btn--lg" href={site.contacts.phoneHref}>
+            <Icon name="phone" size={20} /> Позвонить
+          </a>
+          {site.contacts.max && (
+            <a class="btn btn--outline btn--lg" href={site.contacts.max.href} target="_blank" rel="noopener noreferrer">
+              <Icon name="chat" size={20} /> {site.contacts.max.label}
+            </a>
+          )}
+        </div>
         <p class="product__cta-note">Подскажем по тканям, цветам и срокам: <a href={site.contacts.phoneHref}>{site.contacts.phone}</a></p>
+        {site.guarantee && <p class="guarantee"><Icon name="shield" size={20} /> {site.guarantee.title}</p>}
         {feats.length > 0 && (
           <ul class="feats">
             {feats.map((f) => <li><Icon name={f.icon} size={22} /><span>{f.text}</span></li>)}
@@ -160,7 +168,8 @@ const productLd = {
   .product__lead { margin-top: var(--space-3); max-width: 32rem; }
   .product__price { font-size: var(--text-2xl); font-weight: 600; color: var(--color-text-strong); line-height: 1.2; }
   .product__price-note { margin-top: var(--space-1); font-size: var(--text-xs); color: var(--color-text-muted); }
-  .product__cta { margin-top: var(--space-5); width: 100%; }
+  .product__actions { display: grid; gap: var(--space-3); margin-top: var(--space-5); }
+  .guarantee { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-5); padding: var(--space-2) var(--space-4); border-radius: var(--radius-round); background: var(--color-accent); color: var(--color-brand); font-size: var(--text-sm); font-weight: 500; }
   .product__cta-note { margin-top: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); }
   .product__cta-note a { display: inline-block; padding-block: 0.7rem; color: var(--color-text-strong); white-space: nowrap; }
   .feats { display: grid; gap: var(--space-3); margin-top: var(--space-6); }
@@ -200,7 +209,7 @@ const productLd = {
   }
   @media (min-width: 900px) {
     .product__grid { grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr); column-gap: var(--space-8); grid-template-areas: 'head gallery' 'buy gallery'; grid-template-rows: auto 1fr; align-items: start; }
-    .product__cta { width: auto; min-width: 14rem; }
+    .product__actions { grid-template-columns: max-content; }
     .more__grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
     .tabs__tab { flex: none; min-width: 12rem; }
   }

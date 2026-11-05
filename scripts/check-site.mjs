@@ -7,8 +7,8 @@ const DIST = path.resolve(import.meta.dirname, '..', 'dist');
 const BASE = (process.env.BASE_PATH ?? '/prouyt').replace(/\/+$/, '');
 const PHONE = 'tel:+79645106747';
 const EMAIL = 'mailto:fabrica-proyut@mail.ru';
-const FORBIDDEN = [/TODO/, /\(999\)/, /info@prouyt/, /Щелково/, /Ульяновск/i, /10 лет/, /18 месяцев/, /Лион|Марсель|Оливия|Сидней/];
-const ALLOWED_EXTERNAL = [/^https:\/\/yandex\.ru\/maps\//, /^https:\/\/schema\.org/, /^https:\/\/mdp2mdp\.github\.io/, /^https:\/\/prouyt\.ru/, /^http:\/\/www\.sitemaps\.org/];
+const FORBIDDEN = [/TODO/, /\(999\)/, /info@prouyt/, /Щелково/, /Ульяновск/i, /10 лет/, /Лион|Марсель|Оливия|Сидней/];
+const ALLOWED_EXTERNAL = [/^https:\/\/max\.ru\//, /^https:\/\/vk\.ru\//,/^https:\/\/yandex\.ru\/maps\//, /^https:\/\/schema\.org/, /^https:\/\/mdp2mdp\.github\.io/, /^https:\/\/prouyt\.ru/, /^http:\/\/www\.sitemaps\.org/];
 
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
 const files = walk(DIST);
@@ -45,7 +45,8 @@ for (const page of pages) {
     stats.jsonld++;
     try { JSON.parse(m[1]); } catch { bad(page, 'invalid JSON-LD'); }
   }
-  if (/<form[\s>]/.test(html)) bad(page, 'contains a <form>');
+  // no feedback forms; the catalog search form (role="search") is the only one allowed
+  if ([...html.matchAll(/<form\b[^>]*>/g)].some((m) => !/role="search"/.test(m[0]))) bad(page, 'contains a <form> other than the search form');
   for (const re of FORBIDDEN) if (re.test(html.replace(/<script[\s\S]*?<\/script>/g, ''))) bad(page, `forbidden text ${re}`);
 
   // links and assets

@@ -139,16 +139,20 @@ async function photoInfo(dir, file) {
 }
 async function collectPhotos(m) {
   if (!m.photoDir) return [];
-  const files = fs.readdirSync(path.join(PHOTOS, m.photoDir)).filter((f) => !(m.excludePhotos ?? []).includes(f));
+  let files = fs.readdirSync(path.join(PHOTOS, m.photoDir)).filter((f) => !(m.excludePhotos ?? []).includes(f));
+  if (m.onlyFiles) files = files.filter((f) => m.onlyFiles.includes(f)); // use exactly these files (e.g. when old photos must be dropped)
   const list = [];
   for (const f of files) list.push(await photoInfo(m.photoDir, f));
   for (const e of m.extraPhotos ?? []) list.push(await photoInfo(e.dir, e.file));
-  list.forEach((p) => { p.kind = /студ/i.test(p.src) ? 'studio' : 'interior'; });
+  list.forEach((p) => {
+    p.kind = /студ/i.test(p.src) ? 'studio' : 'interior';
+    p.enhance = p.kind === 'studio' && p.w < 1600; // low-resolution studio shots are upscaled and sharpened by optimize-images.mjs
+  });
   const studio = list.filter((p) => p.kind === 'studio').sort((a, b) => b.w * b.h - a.w * a.h || b.bytes - a.bytes || natural(a.src, b.src));
   const interior = list.filter((p) => p.kind === 'interior').sort((a, b) => natural(a.src, b.src));
   // cover = largest studio shot, then interior shots, then remaining studio angles
   // `cover` in model-map.json picks an assembled front view when the largest studio shot shows the unfolded sofa
-  const coverP = (m.cover && studio.find((p, n) => `studio-${n + 1}` === m.cover)) || studio[0];
+  const coverP = (m.coverFile && studio.find((p) => p.src.endsWith(`/${m.coverFile}`))) || (m.cover && studio.find((p, n) => `studio-${n + 1}` === m.cover)) || studio[0];
   const ordered = [...(coverP ? [coverP] : []), ...interior, ...studio.filter((p) => p !== coverP)];
   let s = 0;
   let i = 0;
@@ -185,6 +189,18 @@ for (const m of map) {
   const doc = docModels.get(`${m.docx[0]}|${m.docx[1]}`);
   if (!doc) throw new Error(`docx model not found: ${m.docx.join('|')}`);
   const specs = doc.specs.map((s) => ({ ...s }));
+  // text corrections requested by the client (overrides.json → descOps): exact phrase replacement inside one paragraph
+  const description = doc.description.slice();
+  for (const op of overrides.descOps.filter((o) => o.slug === m.slug)) {
+    const i = op.paragraph;
+    if (!description[i]?.includes(op.from)) throw new Error(`descOps: phrase not found in ${m.slug}[${i}]: ${op.from}`);
+    description[i] = description[i].replace(op.from, op.to);
+  }
+  for (const op of overrides.specOps.filter((o) => o.slug === m.slug && o.op === 'setSpec')) {
+    const k = specs.findIndex((x) => x.label === op.label);
+    if (k < 0) throw new Error(`setSpec target missing: ${m.slug} ${op.label}`);
+    specs[k] = { ...specs[k], value: op.value, source: 'customer' };
+  }
   const x = m.xlsx;
   const info = x.main ? xlsxInfo(x.main) : null;
   const altInfo = x.alt ? xlsxInfo(x.alt) : null;
@@ -261,7 +277,7 @@ for (const m of map) {
     dims = { label: 'Д×Ш×В', cm: [252, 161, 82] }; // length / ottoman depth from docx, height from xlsx
   }
   const variants = specs.some((s) => /^Исполнение/.test(s.label)) ? ['left', 'right'] : [];
-  const first = doc.description[0].replace(/^(.+?[.!?])(\s.*)?$/, '$1');
+  const first = description[0].replace(/^(.+?[.!?])(\s.*)?$/, '$1');
   const shortDescription = first.endsWith('.') ? first : first + '.';
 
   const type =
@@ -301,7 +317,7 @@ for (const m of map) {
 
   // --- photos
   const photos = await collectPhotos(m);
-  photoMap[m.slug] = photos.map((p) => ({ id: p.id, kind: p.kind, src: p.src, w: p.w, h: p.h }));
+  photoMap[m.slug] = photos.map((p) => ({ id: p.id, kind: p.kind, src: p.src, w: p.w, h: p.h, ...(p.enhance ? { enhance: true } : {}) }));
   const img = (p) => ({ id: `${m.slug}/${p.id}`, kind: p.kind, w: p.w, h: p.h });
   const cover = photos[0] ? img(photos[0]) : null;
   const productTodos = [];
@@ -318,7 +334,7 @@ for (const m of map) {
     pricePromo,
     priceRrp,
     ...(priceVariants ? { priceVariants } : {}),
-    description: doc.description,
+    description,
     shortDescription,
     specs,
     dims,
