@@ -1,5 +1,5 @@
 // Converts ВОПРОСЫ_ЗАКАЗЧИКУ.md into an editable Word file (A4).
-// Usage: node scripts/make-customer-docx.mjs
+// Usage: node scripts/make-customer-docx.mjs [source.md] [output.docx]
 import fs from 'node:fs';
 import { marked } from 'marked';
 import {
@@ -7,8 +7,8 @@ import {
   AlignmentType, WidthType, ShadingType, BorderStyle, LevelFormat, Footer, PageNumber, TableLayoutType,
 } from 'docx';
 
-const SRC = 'ВОПРОСЫ_ЗАКАЗЧИКУ.md';
-const OUT = 'ВОПРОСЫ_ЗАКАЗЧИКУ.docx';
+const SRC = process.argv[2] ?? 'ВОПРОСЫ_ЗАКАЗЧИКУ.md';
+const OUT = process.argv[3] ?? SRC.endsWith('.md') ? SRC.slice(0, -3) + '.docx' : SRC + '.docx';
 const GREEN = '182A1E';
 const SAND = 'F2E9CD';
 const GREY = '5F675F';

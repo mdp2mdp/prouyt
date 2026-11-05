@@ -183,6 +183,19 @@ const icon = async (size) => {
 for (const s of [32, 192, 512]) await (await icon(s)).toFile(path.join(OUT, `icon-${s}.png`));
 await (await icon(180)).toFile(path.join(OUT, 'apple-touch-icon.png'));
 
+/* ---- JPEG copies for the partner product feed (src/lib/feed.js): marketplaces and dealer systems want plain JPEG */
+fs.mkdirSync(path.join(OUT, 'feed'), { recursive: true });
+for (const [slug, list] of Object.entries(photoMap)) {
+  for (const [i, ph] of list.slice(0, 4).entries()) {
+    const m = manifest[`${slug}/${ph.id}`];
+    const w = [...m.widths].reverse().find((x) => x <= 1600) ?? m.widths[0];
+    const from = path.join(OUT, slug, `${ph.id}-${w}.webp`);
+    const to = path.join(OUT, 'feed', `${slug}-${i + 1}.jpg`);
+    if (!FORCE && fs.existsSync(to) && fs.statSync(to).mtimeMs > fs.statSync(from).mtimeMs) continue;
+    await sharp(from).jpeg({ quality: 86, mozjpeg: true, chromaSubsampling: '4:4:4' }).toFile(to);
+  }
+}
+
 fs.writeFileSync(path.join(ROOT, 'src', 'data', 'image-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 
 let total = 0;
