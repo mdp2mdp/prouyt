@@ -15,7 +15,7 @@ export function GET() {
       u: productUrl(p),
       i: p.images.cover ? imageInfo(p.images.cover.id).fallback(480) : null,
       // extra words people may type: the Latin slug and the left/right versions
-      k: [p.slug.replace(/-/g, ' '), p.variants.length ? 'правый левый' : ''].join(' ').trim(),
+      k: [p.slug.replace(/-/g, ' '), p.variants.length ? 'правый левый' : '', p.modifications ? 'модификация узкие подлокотники' : ''].join(' ').trim(),
     }));
   const categories = enabledCategories.map((c) => ({ n: c.title, u: categoryUrl(c) }));
   return new Response(JSON.stringify({ items, categories }), { headers: { 'Content-Type': 'application/json; charset=utf-8' } });

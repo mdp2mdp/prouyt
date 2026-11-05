@@ -102,6 +102,7 @@ const productLd = {
         <div class="tabs__list" role="tablist" aria-label="Информация о модели">
           <button class="tabs__tab" role="tab" id="tab-desc" aria-controls="panel-desc" aria-selected="true" type="button">Описание</button>
           <button class="tabs__tab" role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="false" type="button">Характеристики</button>
+          {p.modifications && <button class="tabs__tab" role="tab" id="tab-mods" aria-controls="panel-mods" aria-selected="false" type="button">Модификации</button>}
         </div>
         <div class="tabs__panel" role="tabpanel" id="panel-desc" aria-labelledby="tab-desc" tabindex="0">
           <h2 class="visually-hidden">Описание</h2>
@@ -133,6 +134,18 @@ const productLd = {
             </>
           )}
         </div>
+        {p.modifications && (
+          <div class="tabs__panel" role="tabpanel" id="panel-mods" aria-labelledby="tab-mods" tabindex="0">
+            <h2 class="visually-hidden">Модификации</h2>
+            <table class="ptable ptable--mods">
+              <thead><tr>{p.modifications.columns.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+              <tbody>
+                {p.modifications.rows.map((r) => <tr><th scope="row">{r[0]}</th>{r.slice(1).map((v) => <td>{v}</td>)}</tr>)}
+              </tbody>
+            </table>
+            {p.modifications.note && <p class="mods__note">{p.modifications.note}</p>}
+          </div>
+        )}
       </div>
       <p class="info__note"><Icon name="info" size={18} /> {site.legal.colorNote}</p>
     </section>
@@ -178,8 +191,9 @@ const productLd = {
 
   .info { margin-top: var(--space-8); }
   .tabs__list { display: none; }
-  :global(.js) .tabs__list { display: flex; border-bottom: var(--border-thin) solid var(--color-border); }
-  .tabs__tab { flex: 1; min-height: 3.25rem; padding: var(--space-3) var(--space-5); border: 0; border-bottom: 2px solid transparent; background: none; font-size: var(--text-base); color: var(--color-text-muted); cursor: pointer; margin-bottom: -1px; transition: color var(--duration-fast), border-color var(--duration-fast); }
+  :global(.js) .tabs__list { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: var(--border-thin) solid var(--color-border); }
+  :global(.js) .tabs__list::-webkit-scrollbar { display: none; }
+  .tabs__tab { flex: 1 1 auto; min-height: 3.25rem; padding: var(--space-3) var(--space-2); white-space: nowrap; font-size: var(--text-sm); border: 0; border-bottom: 2px solid transparent; background: none; color: var(--color-text-muted); cursor: pointer; margin-bottom: -1px; transition: color var(--duration-fast), border-color var(--duration-fast); }
   .tabs__tab:hover { color: var(--color-text-strong); }
   .tabs__tab[aria-selected='true'] { color: var(--color-text-strong); border-bottom-color: var(--color-brand); font-weight: 500; }
   .tabs__panel { padding-block: var(--space-6); max-width: 52rem; }
@@ -195,6 +209,10 @@ const productLd = {
   .ptable tbody th { font-weight: 400; color: var(--color-text-strong); }
   .ptable__sub { color: var(--color-text-muted); font-size: var(--text-xs); }
   .ptable td:last-child { white-space: nowrap; font-weight: 600; text-align: right; }
+  .ptable--mods td { white-space: normal; font-weight: 400; text-align: left; }
+  .ptable--mods thead th:last-child { text-align: left; }
+  .ptable--mods th, .ptable--mods td { padding-right: var(--space-4); }
+  .mods__note { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); }
   .ptable thead th:last-child { text-align: right; }
   .info__note { display: flex; gap: var(--space-2); align-items: flex-start; font-size: var(--text-xs); color: var(--color-text-muted); max-width: 40rem; }
   .info__note :global(.icon) { margin-top: 0.1rem; }
@@ -203,7 +221,11 @@ const productLd = {
   .more h2 { text-align: center; font-size: var(--text-2xl); margin-bottom: var(--space-6); }
   .more__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
 
+  @media (max-width: 379px) {
+    .tabs__tab { font-size: var(--text-xs); padding-inline: var(--space-1); }
+  }
   @media (min-width: 640px) {
+    .tabs__tab { font-size: var(--text-base); padding-inline: var(--space-5); }
     .specs__row { grid-template-columns: 14rem 1fr; gap: var(--space-4); }
     .more__grid { gap: var(--space-4); }
   }

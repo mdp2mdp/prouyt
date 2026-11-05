@@ -341,6 +341,7 @@ for (const m of map) {
     mechanism,
     variants,
     ...(modules ? { modules, sets } : {}),
+    ...(overrides.modifications?.[m.slug] ? { modifications: overrides.modifications[m.slug] } : {}),
     images: { cover, gallery: photos.map(img), placeholder: photos.length === 0 },
     xlsxRow: m.slug === 'estetik' ? x.fromRow : x.main,
     ...(x.note ? { xlsxNote: x.note } : {}),

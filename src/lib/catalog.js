@@ -43,6 +43,7 @@ export function features(p) {
   }
   const mech = get(/^Механизм трансформации/);
   if (mech && !/отсутствует/i.test(mech.value)) out.push({ icon: 'cycle', text: `Механизм ${mech.value.replace(/\s*\(.*\)/, '')}` });
+  if (p.modifications) out.push({ icon: 'swap', text: 'Две модификации: с широкими и узкими подлокотниками' });
   if (p.variants.length) out.push({ icon: 'swap', text: 'Правое или левое исполнение' });
   for (const [re, icon] of [[/^Высота сиденья/, 'ruler'], [/^Каркас/, 'frame']]) {
     const s = get(re);
