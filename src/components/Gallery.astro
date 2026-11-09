@@ -1,12 +1,25 @@
 ---
 import Picture from './Picture.astro';
 import Icon from './Icon.astro';
-import { photoAlt } from '../lib/catalog.js';
+import { photoAlt, videoOf } from '../lib/catalog.js';
+import { url } from '../lib/site.js';
 const { product: p } = Astro.props;
-const imgs = p.images.gallery;
-const many = imgs.length > 1;
 let interiorN = 0;
-const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN : 0));
+// slides: the photos, plus an optional click-to-play video slide inserted at video.position (1 = first)
+const slides = p.images.gallery.map((g) => ({ type: 'photo', g, alt: photoAlt(p, g, g.kind === 'interior' ? ++interiorN : 0) }));
+const video = videoOf(p.slug);
+if (video && slides.length) {
+  slides.splice(Math.min(Math.max((video.position ?? slides.length + 1) - 1, 1), slides.length), 0, {
+    type: 'video',
+    src: url(`video/${p.slug}.mp4`),
+    poster: url(`video/${p.slug}-poster.jpg`),
+    title: video.title,
+    duration: video.duration,
+  });
+}
+const total = slides.length;
+const many = total > 1;
+const imgs = slides;
 ---
 {imgs.length === 0 ? (
   <div class="gallery">
@@ -18,11 +31,19 @@ const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN 
   <div class="gallery" data-gallery>
     <div class="gallery__main">
       <div class="gallery__track" tabindex="0" role="group" aria-roledescription="карусель" aria-label={`Фотографии: ${p.name}`} data-track>
-        {imgs.map((g, i) => (
-          <div class="gallery__slide photo" role="group" aria-roledescription="слайд" aria-label={`${i + 1} из ${imgs.length}`}>
+        {slides.map((s, i) => s.type === 'video' ? (
+          <div class="gallery__slide gallery__slide--video" role="group" aria-roledescription="слайд" aria-label={`${i + 1} из ${total}: видео`}>
+            <button class="video-play" type="button" aria-label={`Смотреть видео: ${s.title}`} data-video-src={s.src} data-video-poster={s.poster}>
+              <img src={s.poster} width="1280" height="720" alt="" loading="lazy" decoding="async" />
+              <span class="video-play__icon"><Icon name="play" size={34} /></span>
+              <span class="video-play__label">Видео · {s.duration} с</span>
+            </button>
+          </div>
+        ) : (
+          <div class="gallery__slide photo" role="group" aria-roledescription="слайд" aria-label={`${i + 1} из ${total}`}>
             <Picture
-              id={g.id}
-              alt={alts[i]}
+              id={s.g.id}
+              alt={s.alt}
               sizes="(min-width: 1100px) 720px, (min-width: 900px) 55vw, 100vw"
               priority={i === 0}
               fallbackWidth={1600}
@@ -32,19 +53,21 @@ const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN 
       </div>
       {many && (
         <>
-          <button class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Предыдущее фото" data-prev><Icon name="arrow-left" size={22} /></button>
-          <button class="gallery__arrow gallery__arrow--next" type="button" aria-label="Следующее фото" data-next><Icon name="arrow" size={22} /></button>
-          <p class="gallery__count" aria-live="polite" data-count>1 / {imgs.length}</p>
+          <button class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Предыдущий слайд" data-prev><Icon name="arrow-left" size={22} /></button>
+          <button class="gallery__arrow gallery__arrow--next" type="button" aria-label="Следующий слайд" data-next><Icon name="arrow" size={22} /></button>
+          <p class="gallery__count" aria-live="polite" data-count>1 / {total}</p>
         </>
       )}
     </div>
     {many && (
       <ul class="gallery__thumbs" data-thumbs>
-        {imgs.map((g, i) => (
+        {slides.map((s, i) => (
           <li>
-            <button class="gallery__thumb" type="button" aria-label={`Показать фото ${i + 1} из ${imgs.length}`} aria-current={i === 0 ? 'true' : undefined} data-thumb={i}>
+            <button class="gallery__thumb" type="button" aria-label={s.type === 'video' ? `Показать видео ${i + 1} из ${total}` : `Показать фото ${i + 1} из ${total}`} aria-current={i === 0 ? 'true' : undefined} data-thumb={i}>
               <span class="photo">
-                <Picture id={g.id} alt="" sizes="96px" fallbackWidth={480} />
+                {s.type === 'video'
+                  ? <><img src={s.poster} width="1280" height="720" alt="" loading="lazy" decoding="async" /><span class="gallery__thumb-play"><Icon name="play" size={18} /></span></>
+                  : <Picture id={s.g.id} alt="" sizes="96px" fallbackWidth={480} />}
               </span>
             </button>
           </li>
@@ -60,13 +83,25 @@ const alts = imgs.map((g) => photoAlt(p, g, g.kind === 'interior' ? ++interiorN 
   .gallery__track::-webkit-scrollbar { display: none; }
   .gallery__track:focus-visible { outline-offset: -3px; }
   .gallery__slide { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+  /* video slide: poster + play button; the <video> element is created only on click, so nothing heavy loads with the page */
+  .gallery__slide--video { background: var(--green-950); }
+  .video-play { position: relative; display: block; width: 100%; aspect-ratio: var(--photo-ratio); padding: 0; border: 0; background: none; cursor: pointer; color: var(--color-on-dark); }
+  .video-play img, .gallery__slide--video :global(video) { width: 100%; height: 100%; object-fit: contain; background: var(--green-950); }
+  .gallery__slide--video :global(video) { display: block; aspect-ratio: var(--photo-ratio); }
+  .video-play__icon { position: absolute; inset: 0; margin: auto; display: grid; place-items: center; width: 4.5rem; height: 4.5rem; padding-left: 0.2rem; border-radius: var(--radius-round); background: rgb(242 233 205 / 0.92); color: var(--color-brand); box-shadow: var(--shadow-md); transition: transform var(--duration) var(--ease), background-color var(--duration-fast); }
+  .video-play:hover .video-play__icon { transform: scale(1.06); background: var(--color-accent); }
+  .video-play__label { position: absolute; left: var(--space-3); bottom: var(--space-3); padding: 0.15rem 0.7rem; border-radius: var(--radius-round); background: rgb(24 42 30 / 0.78); font-size: var(--text-xs); }
+  .gallery__thumb-play { position: absolute; inset: 0; display: grid; place-items: center; color: var(--color-brand); }
+  .gallery__thumb-play :global(.icon) { box-sizing: content-box; padding: 0.35rem 0.35rem 0.35rem 0.45rem; border-radius: var(--radius-round); background: rgb(242 233 205 / 0.92); }
+  .gallery__thumb .photo { position: relative; }
+  .gallery__thumb .photo img { width: 100%; height: 100%; object-fit: cover; }
   .gallery__empty { border-radius: var(--radius-lg); }
   .gallery__arrow { position: absolute; top: 50%; translate: 0 -50%; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0; border-radius: var(--radius-round); background: rgb(255 255 255 / 0.92); color: var(--color-brand); box-shadow: var(--shadow-md); cursor: pointer; transition: background-color var(--duration-fast), opacity var(--duration-fast); }
   .gallery__arrow:hover { background: #fff; }
   .gallery__arrow[disabled] { opacity: 0.35; cursor: default; }
   .gallery__arrow--prev { left: var(--space-3); }
   .gallery__arrow--next { right: var(--space-3); }
-  .gallery__count { position: absolute; right: var(--space-3); bottom: var(--space-3); padding: 0.15rem 0.6rem; border-radius: var(--radius-round); background: rgb(24 42 30 / 0.72); color: var(--color-on-dark); font-size: var(--text-xs); }
+  .gallery__count { position: absolute; right: var(--space-3); top: var(--space-3); padding: 0.15rem 0.6rem; border-radius: var(--radius-round); background: rgb(24 42 30 / 0.72); color: var(--color-on-dark); font-size: var(--text-xs); }
   .gallery__thumbs { display: flex; gap: var(--space-2); margin-top: var(--space-3); overflow-x: auto; padding: 3px; scrollbar-width: thin; }
   .gallery__thumbs li { flex: none; }
   .gallery__thumb { display: block; width: 5.5rem; padding: 0; border: 2px solid transparent; border-radius: var(--radius-md); background: none; cursor: pointer; overflow: hidden; opacity: 0.75; transition: opacity var(--duration-fast), border-color var(--duration-fast); }

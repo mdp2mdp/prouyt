@@ -1,0 +1,12 @@
+{
+  "_comment": "Product videos shown in the gallery as a click-to-play slide. Files are built by `npm run video` from _source/video.",
+  "oskar-uglovoy": {
+    "source": "oskar-uglovoy.MOV",
+    "title": "Как раскладывается угловой диван «Оскар»",
+    "description": "Видео: раскладывание углового дивана «Оскар», ящик для белья в оттоманке и откидная крышка подлокотника.",
+    "duration": 12,
+    "posterAt": 0.3,
+    "position": 2,
+    "uploadDate": "2026-11-09"
+  }
+}

@@ -3,7 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import Gallery from '../../../components/Gallery.astro';
 import ProductCard from '../../../components/ProductCard.astro';
 import Icon from '../../../components/Icon.astro';
-import { products, categoryById, categoryUrl, productUrl, priceText, features, related, lc } from '../../../lib/catalog.js';
+import { videoOf, products, categoryById, categoryUrl, productUrl, priceText, features, related, lc } from '../../../lib/catalog.js';
 import { imageInfo } from '../../../lib/images.js';
 import manifest from '../../../data/image-manifest.json';
 import { site, url, formatPrice, priceOf } from '../../../lib/site.js';
@@ -33,6 +33,17 @@ const crumbs = {
     [p.name, productUrl(p)],
   ].map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(item) })),
 };
+const video = videoOf(p.slug);
+const videoLd = video ? {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: video.title,
+  description: video.description,
+  thumbnailUrl: abs(url(`video/${p.slug}-poster.jpg`)),
+  contentUrl: abs(url(`video/${p.slug}.mp4`)),
+  uploadDate: video.uploadDate,
+  duration: `PT${video.duration}S`,
+} : null;
 const productLd = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -52,7 +63,7 @@ const productLd = {
   },
 };
 ---
-<Base title={title} description={description} jsonLd={[productLd, crumbs]} image={manifest.og.includes(p.slug) ? `img/og/${p.slug}.jpg` : undefined}>
+<Base title={title} description={description} jsonLd={[productLd, crumbs, ...(videoLd ? [videoLd] : [])]} image={manifest.og.includes(p.slug) ? `img/og/${p.slug}.jpg` : undefined}>
   <div class="container product">
     <nav class="crumbs" aria-label="Хлебные крошки">
       <ol>

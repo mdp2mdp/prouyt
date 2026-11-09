@@ -60,3 +60,7 @@ export function related(p, n = 4) {
 }
 
 export const mechanismsOf = (list) => [...new Set(list.map((p) => p.mechanism).filter(Boolean))];
+
+import videos from '../data/videos.json';
+/** Product video config (see src/data/videos.json) or null. */
+export const videoOf = (slug) => (slug.startsWith('_') ? null : videos[slug] ?? null);

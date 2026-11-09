@@ -17,6 +17,7 @@ function initGallery(root) {
   };
   const sync = (i) => {
     if (i === index && root.dataset.ready) return;
+    track.querySelectorAll('video').forEach((v) => v.pause()); // stop a playing video when the slide changes
     index = i;
     root.dataset.ready = '1';
     thumbs.forEach((t, k) => {
@@ -36,6 +37,23 @@ function initGallery(root) {
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(() => sync(Math.round(track.scrollLeft / track.clientWidth)));
   }, { passive: true });
+  // video slide: the <video> is created on the first click, so the page stays light until someone asks for it
+  track.querySelectorAll('[data-video-src]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const v = document.createElement('video');
+      v.src = btn.dataset.videoSrc;
+      v.poster = btn.dataset.videoPoster;
+      v.controls = true;
+      v.autoplay = true;
+      v.muted = true; // the footage has no sound
+      v.playsInline = true;
+      v.preload = 'auto';
+      v.setAttribute('aria-label', btn.getAttribute('aria-label').replace('Смотреть видео: ', 'Видео: '));
+      btn.replaceWith(v);
+      v.play().catch(() => {});
+      v.focus();
+    });
+  });
   prev?.addEventListener('click', () => go(index - 1));
   next?.addEventListener('click', () => go(index + 1));
   thumbs.forEach((t, k) => t.addEventListener('click', () => go(k)));
