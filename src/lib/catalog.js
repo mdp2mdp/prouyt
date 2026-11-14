@@ -63,4 +63,7 @@ export const mechanismsOf = (list) => [...new Set(list.map((p) => p.mechanism).f
 
 import videos from '../data/videos.json';
 /** Product video config (see src/data/videos.json) or null. */
-export const videoOf = (slug) => (slug.startsWith('_') ? null : videos[slug] ?? null);
+export const videoOf = (slug) => {
+  const v = slug.startsWith('_') ? null : videos[slug];
+  return v && v.enabled !== false ? v : null;
+};

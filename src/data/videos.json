@@ -1,5 +1,5 @@
 {
-  "_comment": "Product videos shown in the gallery as a click-to-play slide. Files are built by `npm run video` from _source/video.",
+  "_comment": "Product videos shown in the gallery as a click-to-play slide. Files are built by `npm run video` from _source/video. Set \"enabled\": false to hide a video without deleting its entry.",
   "oskar-uglovoy": {
     "source": "oskar-uglovoy.MOV",
     "title": "Как раскладывается угловой диван «Оскар»",
@@ -7,6 +7,7 @@
     "duration": 12,
     "posterAt": 0.3,
     "position": 2,
-    "uploadDate": "2026-11-09"
+    "uploadDate": "2026-11-09",
+    "enabled": false
   }
 }

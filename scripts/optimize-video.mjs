@@ -11,7 +11,7 @@ const videos = JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'data', 'videos
 const OUT = path.join(ROOT, 'public', 'video');
 fs.mkdirSync(OUT, { recursive: true });
 
-for (const [slug, v] of Object.entries(videos).filter(([k]) => !k.startsWith('_'))) {
+for (const [slug, v] of Object.entries(videos).filter(([k, x]) => !k.startsWith('_') && x.enabled !== false)) {
   const src = path.join(ROOT, '_source', 'video', v.source);
   const mp4 = path.join(OUT, `${slug}.mp4`);
   const poster = path.join(OUT, `${slug}-poster.jpg`);
